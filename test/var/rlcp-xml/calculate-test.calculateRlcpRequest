@@ -1,0 +1,23 @@
+<Request>
+  <Conditions>
+    <ConditionForCalculating>
+      <Input>
+        <!--null-->
+      </Input>
+    </ConditionForCalculating>
+  </Conditions>
+  <Instructions>
+    <!--null-->
+  </Instructions>
+  <PreGenerated>
+    <Text>
+      <!--Ваш вариант загружен в установку-->
+    </Text>
+    <Code>
+      <!--{"radius_bounds":[3,3],"mass":1}-->
+    </Code>
+    <Instructions>
+      <!--{"i":0.3,"v":0.1}-->
+    </Instructions>
+  </PreGenerated>
+</Request>

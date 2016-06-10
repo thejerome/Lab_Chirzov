@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="configPath" class="java.lang.String">
+        <constructor-arg value="rsc/ConfigServer.xml"/>
+    </bean>
+
+    <bean id="engineJS" class="java.lang.String">
+        <constructor-arg value="nashorn"/>
+    </bean>
+
+    <bean id="generateProcessor"
+          class="rlcp.server.processor.factory.ScriptEngineFactory"
+          c:engineName-ref="engineJS"
+          c:file="vlab#{systemProperties['file.separator']}server_js#{systemProperties['file.separator']}generate#{systemProperties['file.separator']}GenerateProcessorImpl.js"
+          c:clazz="rlcp.server.processor.generate.GenerateProcessor"/>
+    <bean id="calculateProcessor"
+          class="rlcp.server.processor.factory.ScriptEngineFactory"
+          c:engineName-ref="engineJS"
+          c:file="vlab#{systemProperties['file.separator']}server_js#{systemProperties['file.separator']}calculate#{systemProperties['file.separator']}CalculateProcessorImpl.js"
+          c:clazz="rlcp.server.processor.calculate.CalculateProcessor"/>
+    <bean id="checkProcessor"
+          class="rlcp.server.processor.factory.ScriptEngineFactory"
+          c:engineName-ref="engineJS"
+          c:file="vlab#{systemProperties['file.separator']}server_js#{systemProperties['file.separator']}check#{systemProperties['file.separator']}CheckProcessorImpl.js"
+          c:clazz="rlcp.server.processor.check.PreCheckResultAwareCheckProcessor"/>
+
+    <bean id="container"
+          class="rlcp.server.processor.factory.ProcessorFactoryContainer"
+          p:generateProcessorFactory-ref="generateProcessor"
+          p:calculateProcessorFactory-ref="calculateProcessor"
+          p:checkProcessorFactory-ref="checkProcessor"/>
+
+    <bean id="server"
+          class="rlcp.server.Server"
+          c:configPath-ref="configPath"
+          c:processorFactoryContainer-ref="container"/>
+
+</beans>
