@@ -109,6 +109,7 @@
 .workspace_light_source .light_source_screen,
 .workspace_slits .slits_screen,
 .workspace_screen .screen_pattern,
+.workspace_screen .screen_comparison,
 .workspace_screen .screen_user {
     margin-top: 10px;
     position: relative;
@@ -116,16 +117,6 @@
     height: 60%;
     background-color: #b8b9bc;
     border: 1px solid #3d4652;
-}
-
-.workspace_screen .screen_pattern,
-.workspace_screen .screen_user {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.workspace_screen .screen_user {
-    display: none;
 }
 
 .slits_screen .slit {
@@ -281,14 +272,20 @@
 }
 
 .workspace_intensity_plot .intensity_plot_user,
-.workspace_visibility_plot .visibility_plot_user {
+.workspace_visibility_plot .visibility_plot_user,
+.workspace_screen .screen_user,
+.workspace_intensity_plot .intensity_comparison,
+.workspace_visibility_plot .visibility_comparison,
+.workspace_screen .screen_comparison {
     display: none;
 }
+
+
 
 .workspace_intensity_plot,
 .workspace_visibility_plot {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     align-content: space-around;
@@ -318,10 +315,13 @@
 
 .workspace_screen .screen_pattern,
 .workspace_screen .screen_user,
+.workspace_screen .screen_comparison,
 .workspace_intensity_plot .intensity_plot_pattern,
 .workspace_intensity_plot .intensity_plot_user,
+.workspace_intensity_plot .intensity_comparison,
 .workspace_visibility_plot .visibility_plot_pattern,
-.workspace_visibility_plot .visibility_plot_user {
+.workspace_visibility_plot .visibility_plot_user,
+.workspace_visibility_plot .visibility_comparison {
     margin-left: 25px;
     margin-right: 25px;
 }
@@ -330,13 +330,24 @@
 .intensity_plot_pattern_show,
 .visibility_plot_pattern_show {
     color: #eea236;
-    margin-right: 80px;
+    margin-right: 10px;
 }
 
 .screen_user_show,
 .intensity_plot_user_show,
 .visibility_plot_user_show {
     color: #000080;
+    margin-right: 10px;
+}
+
+.screen_comparison_show,
+.intensity_comparison_show,
+.visibility_comparison_show {
+    color: #569F1D;
+}
+
+.plot_show.not_active:hover {
+    cursor: default;
 }
 
 .plot_show:hover {
