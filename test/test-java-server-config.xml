@@ -10,7 +10,7 @@
 
 
        <bean id="url" class="java.lang.String">
-              <constructor-arg value="rlcp://user:user@127.0.0.1:3000"/>
+              <constructor-arg value="rlcp://dlc:dlc@127.0.0.1:14111"/>
        </bean>
 
        <bean id="testDir" class="java.lang.String">
