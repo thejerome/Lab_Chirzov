@@ -6,10 +6,8 @@ import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.calculate.CalculateProcessor;
 import vlab.server_java.model.*;
 
-import java.util.Arrays;
-
-import static vlab.server_java.model.util.HtmlParamEscaper.escapeParam;
-import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonString;
+import static vlab.server_java.model.util.Util.escapeParam;
+import static vlab.server_java.model.util.Util.prepareInputJsonString;
 
 /**
  * Simple CalculateProcessor implementation. Supposed to be changed as needed to provide necessary Calculate method support.
@@ -21,7 +19,7 @@ public class CalculateProcessorImpl implements CalculateProcessor {
         String text = "text";
         String code = "code";
 
-        condition = prepareInputJsonString(condition);
+        instructions = prepareInputJsonString(instructions);
 
         generatingResult = new GeneratingResult(
                 generatingResult.getText(),
@@ -32,11 +30,10 @@ public class CalculateProcessorImpl implements CalculateProcessor {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            CalculateTask calculateTask = objectMapper.readValue(condition, CalculateTask.class);
-            GenerateCodeResult varCode = objectMapper.readValue(generatingResult.getCode(), GenerateCodeResult.class);
-            GenerateInstructionsResult varInstr = objectMapper.readValue(generatingResult.getInstructions(), GenerateInstructionsResult.class);
-            CalculateCodeResult result = new RungeKuttaLab1().calculate(calculateTask, varCode, varInstr);
-            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString(result)));
+            ToolState toolState = objectMapper.readValue(instructions, ToolState.class);
+            Variant varCode = objectMapper.readValue(generatingResult.getCode(), Variant.class);
+
+            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString("")));
         } catch (Exception e) {
             return new CalculatingResult("error", e.toString());
         }

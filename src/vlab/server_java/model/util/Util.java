@@ -1,12 +1,15 @@
 package vlab.server_java.model.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Класс, реализующий экранирование/разэкранирование специальных символов
  * при передаче состояния ВЛР на сторону сервера и обратно.
  */
-public class HtmlParamEscaper {
+public class Util {
 
 	/**
 	 * метод для экранирования строки
@@ -100,4 +103,31 @@ public class HtmlParamEscaper {
     public static BigDecimal shrink(BigDecimal v){
         return v.setScale(6, BigDecimal.ROUND_HALF_UP);
     }
+
+    public static BigDecimal[] shrink(BigDecimal[] v){
+        v = Arrays.copyOf(v, v.length);
+        for (int i = 0; i < v.length; i++) {
+            v[i] = shrink(v[i]);
+        }
+        return v;
+    }
+
+
+    public static List<BigDecimal[]> shrink(List<BigDecimal[]> v){
+        List<BigDecimal[]> newV = new ArrayList<>(v.size());
+        for (BigDecimal[] arr : v) {
+            newV.add(shrink(arr));
+        }
+        return newV;
+    }
+
+
+    public static BigDecimal bd(String s) {
+        return new BigDecimal(s);
+    }
+
+    public static BigDecimal bd(double d) {
+        return new BigDecimal(d);
+    }
+
 }

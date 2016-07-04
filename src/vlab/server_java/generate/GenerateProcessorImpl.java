@@ -4,14 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.generate.GenerateProcessor;
-import vlab.server_java.model.GenerateCodeResult;
-import vlab.server_java.model.GenerateInstructionsResult;
-import vlab.server_java.model.util.HtmlParamEscaper;
+import vlab.server_java.model.ToolState;
+import vlab.server_java.model.Variant;
+import vlab.server_java.model.tool.ToolModel;
+
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 
-import static vlab.server_java.model.util.HtmlParamEscaper.escapeParam;
+import static vlab.server_java.model.util.Util.bd;
+import static vlab.server_java.model.util.Util.escapeParam;
 
 /**
  * Simple GenerateProcessor implementation. Supposed to be changed as needed to
@@ -19,11 +22,7 @@ import static vlab.server_java.model.util.HtmlParamEscaper.escapeParam;
  */
 public class GenerateProcessorImpl implements GenerateProcessor {
 
-    public static final BigDecimal ONE = new BigDecimal("1");
-    public static final BigDecimal THREE = new BigDecimal("3");
-    public static final BigDecimal SIX = new BigDecimal("3");
-    public static final BigDecimal OTHREE = new BigDecimal("0.3");
-    public static final BigDecimal OONE = new BigDecimal("0.1");
+
 
     Random random = new Random(System.nanoTime());
 
@@ -33,36 +32,74 @@ public class GenerateProcessorImpl implements GenerateProcessor {
 
         //do Generate logic here
         String text = "Ваш вариант загружен в установку";
-        String code = null;
-        String instructions = null;
+        String code = " ";
+        String instructions = " ";
         try {
+            /*
             int radius_bounds_a = getRandomIntegerBetween(2, 6);
             int radius_bounds_b = radius_bounds_a + radius_bounds_a + 1;
             int mass = getRandomIntegerBetween(1, 5);
 
             double i = getRandomDoubleBetween(radius_bounds_a / 2, radius_bounds_a);
             double v = getRandomDoubleBetween(mass * 2 + 1, mass * 5);
+*/
+
+
+            BigDecimal light_slits_distance = bd(0.5);
+            BigDecimal slits_screen_distance = bd(0.7);
+            BigDecimal[] light_screen_range = new BigDecimal[]{bd(0.01), bd(0.4)};
+            BigDecimal light_screen_step = bd(0.01);
+            BigDecimal light_width = bd(0.05);
+            BigDecimal[] light_width_range = new BigDecimal[]{bd(0.001), bd(0.1)};
+            BigDecimal light_width_step = bd(0.001);
+            BigDecimal light_length = bd(721);
+            BigDecimal[] light_length_range = new BigDecimal[]{bd(380), bd(780)};
+            BigDecimal light_length_step = bd(1);
+            boolean right_slit_closed = false;
+            boolean left_slit_closed = false;
+            BigDecimal between_slits_width = bd(0.01);
+            BigDecimal[] between_slits_range = new BigDecimal[]{bd(0.001), bd(0.02)};
+            BigDecimal between_slits_step = bd(0.001);
+            List<BigDecimal[]> data_plot_pattern = ToolModel.buildPlot(
+                    new ToolState(
+                            light_slits_distance,
+                            slits_screen_distance,
+                            light_width,
+                            light_length,
+                            between_slits_width,
+                            left_slit_closed,
+                            right_slit_closed
+                    )
+            ).getData_plot();
 
             code = mapper.writeValueAsString(
-                    new GenerateCodeResult(
-                            new BigDecimal[]{
-                                    new BigDecimal(radius_bounds_a),
-                                    new BigDecimal((radius_bounds_b))
-                            },
-                            new BigDecimal(mass))
-            );
-            instructions = mapper.writeValueAsString(
-                    new GenerateInstructionsResult(
-                            new BigDecimal(i).setScale(2, BigDecimal.ROUND_HALF_UP),
-                            new BigDecimal(v).setScale(2, BigDecimal.ROUND_HALF_UP)
+                    new Variant(light_slits_distance,
+                            slits_screen_distance,
+                            light_screen_range,
+                            light_screen_step,
+                            light_width,
+                            light_width_range,
+                            light_width_step,
+                            light_length,
+                            light_length_range,
+                            light_length_step,
+                            right_slit_closed,
+                            left_slit_closed,
+                            between_slits_width,
+                            between_slits_range,
+                            between_slits_step,
+                            data_plot_pattern
                     )
             );
+
+            instructions = " ";
         } catch (JsonProcessingException e) {
             code = "Failed, " + e.getOriginalMessage();
         }
 
         return new GeneratingResult(text, escapeParam(code), escapeParam(instructions));
     }
+
 
     private int getRandomIntegerBetween(int a, int b) {
         return (a + random.nextInt(b - a + 1));

@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,26 +6,16 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import rlcp.generate.GeneratingResult;
+import rlcp.server.processor.Processor;
 import rlcp.server.processor.factory.ProcessorFactory;
 import rlcp.server.processor.generate.GenerateProcessor;
-import vlab.server_java.model.CalculateTask;
-import vlab.server_java.model.CheckTask;
-import vlab.server_java.model.CheckTask.Row;
-import vlab.server_java.model.GenerateCodeResult;
-import vlab.server_java.model.GenerateInstructionsResult;
-import vlab.server_java.model.util.HtmlParamEscaper;
+import vlab.server_java.generate.GenerateProcessorImpl;
+import vlab.server_java.model.Variant;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import static java.math.BigDecimal.ONE;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
-import static vlab.server_java.model.util.HtmlParamEscaper.*;
-import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonString;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-*-server-config.xml")
@@ -47,53 +36,61 @@ public class GenerateLogicTests {
     }
 
     @Test
-    public void testJson() {
+    public void testJson() throws Exception{
         //create ObjectMapper instance
         ObjectMapper objectMapper = new ObjectMapper();
 
         //convert json string to object
-        GenerateCodeResult variant = new GenerateCodeResult(new BigDecimal[]{new BigDecimal(3), new BigDecimal(6)}, ONE);
-        CheckTask solution = new CheckTask(
-                new ArrayList<Row>(){
-                    {
-                        add(new Row(new BigDecimal("1"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02")));
-                        add(new Row(new BigDecimal("1"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02")));
-                        add(new Row(new BigDecimal("1"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02"), new BigDecimal("0.03"), new BigDecimal("0.02")));
-                    }
-                }, new BigDecimal("0.654"), new BigDecimal("654163")
-        );
 
-        try {
             System.out.println(objectMapper.writeValueAsString(
                             objectMapper.readValue(
-                                    objectMapper.writeValueAsString(variant), GenerateCodeResult.class)
+                                    "{\"light_slits_distance\": 1,\n" +
+                                            " \"slits_screen_distance\": 40,\n" +
+                                            " \"light_screen_range\": [1, 40],\n" +
+                                            " \"light_screen_step\": 1,\n" +
+                                            " \"light_width\": 5,\n" +
+                                            " \"light_width_range\": [0.1, 10],\n" +
+                                            " \"light_width_step\": 0.1,\n" +
+                                            " \"light_length\": 721,\n" +
+                                            " \"light_length_range\": [380, 780],\n" +
+                                            " \"light_length_step\": 1,\n" +
+                                            " \"right_slit_closed\": false,\n" +
+                                            " \"left_slit_closed\": false,\n" +
+                                            " \"between_slits_width\": 1,\n" +
+                                            " \"between_slits_range\": [0.1, 2],\n" +
+                                            " \"between_slits_step\": 0.1,\n" +
+                                            " \"data_plot_pattern\": [\n" +
+                                            " [0.01, 0.3, 3.5, 1],\n" +
+                                            " [1.01, 0.8, 3.5, 2],\n" +
+                                            " [2.02, 1.2, 3.6, 0],\n" +
+                                            " [3.03, 1.4, 3.7, 3],\n" +
+                                            " [4.04, 1.9, 3.1, 0],\n" +
+                                            " [5.05, 2.3, 2.5, 5],\n" +
+                                            " [6.06, 2.8, 4, 1],\n" +
+                                            " [7.00, 2.9, 1, 3],\n" +
+                                            " [10.5, 3.2, 1, 2]\n" +
+                                            " ]" +
+                                            "}", Variant.class)
                     )
             );
-            System.out.println(objectMapper.writeValueAsString(
-                            objectMapper.readValue(
-                                    objectMapper.writeValueAsString(solution), CheckTask.class)
-                    )
-            );
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
 
     }
 
     @Test
-    public void realLifeParsingGeneratingResult() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String code = prepareInputJsonString("{&quot;radius_bounds&quot;:[3,3],&quot;mass&quot;:1}");
-        String inst = prepareInputJsonString("{&quot;i&quot;:0.3,&quot;v&quot;:0.1}");
-        GenerateCodeResult c = objectMapper.readValue(code, GenerateCodeResult.class);
-        GenerateInstructionsResult i = objectMapper.readValue(inst, GenerateInstructionsResult.class);
+    public void testGenerateProcessorProcesses() throws Exception{
 
-        assertNotNull(c);
-        assertNotNull(i);
+        GenerateProcessor generateProcessor = new GenerateProcessorImpl();
+
+        GeneratingResult generatingResult = generateProcessor.generate("no matter");
+
+        System.out.println(generatingResult.getCode());
+
+
     }
+
+
 
 
 }

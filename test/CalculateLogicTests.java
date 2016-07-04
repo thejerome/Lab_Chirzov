@@ -1,5 +1,3 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +9,12 @@ import rlcp.calculate.CalculatingResult;
 import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.calculate.CalculateProcessor;
 import rlcp.server.processor.factory.ProcessorFactory;
+import rlcp.server.processor.generate.GenerateProcessor;
 import vlab.server_java.calculate.CalculateProcessorImpl;
+import vlab.server_java.generate.GenerateProcessorImpl;
 import vlab.server_java.model.*;
-import vlab.server_java.model.util.HtmlParamEscaper;
+import vlab.server_java.model.util.Util;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import static java.math.BigDecimal.ONE;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
@@ -28,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static vlab.server_java.model.util.HtmlParamEscaper.prepareInputJsonString;
+import static vlab.server_java.model.util.Util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-*-server-config.xml")
@@ -55,60 +50,63 @@ public class CalculateLogicTests {
 
 
     @Test
-    public void testJson() {
+    public void testJson() throws  Exception{
         //create ObjectMapper instance
         ObjectMapper objectMapper = new ObjectMapper();
 
         //convert json string to object
-        CalculateTask task = new CalculateTask(new BigDecimal("3"), new BigDecimal("6.546"));
-        CalculateCodeResult result = new CalculateCodeResult(new ArrayList<BigDecimal[]>(){
-            {
-                add(new BigDecimal[]{new BigDecimal("0.01"), new BigDecimal("0.02"), new BigDecimal("0.03")});
-                add(new BigDecimal[]{new BigDecimal("0.02"), new BigDecimal("0.04"), new BigDecimal("0.06")});
-                add(new BigDecimal[]{new BigDecimal("0.03"), new BigDecimal("0.06"), new BigDecimal("0.09")});
-            }
-        });
-        try {
+
+
             System.out.println(objectMapper.writeValueAsString(
                             objectMapper.readValue(
-                                    objectMapper.writeValueAsString(task), CalculateTask.class)
+                                    "{\n" +
+                                            " \"light_slits_distance\":50,\n" +
+                                            " \"slits_screen_distance\":50,\n" +
+                                            " \"light_width\":50,\n" +
+                                            " \"light_length\":50,\n" +
+                                            " \"left_slit_closed\":false,\n" +
+                                            " \"right_slit_closed\":false,\n" +
+                                            " \"between_slits_width\":50}",
+                                    ToolState.class)
                             )
             );
             System.out.println(objectMapper.writeValueAsString(
                             objectMapper.readValue(
-                                    objectMapper.writeValueAsString(result), CalculateCodeResult.class)
+                                    "{ \"data_plot\": [\n" +
+                                            " [0.01, 0, 3.5, 2],\n" +
+                                            " [1.01, 0.8, 3.5, 2],\n" +
+                                            " [2.02, 3, 6, 0],\n" +
+                                            " [3.03, 1.4, 0, 5],\n" +
+                                            " [4.04, 0.9, 3.1, 0],\n" +
+                                            " [5.05, 2.3, 2.5, 0],\n" +
+                                            " [6.06, 2.8, 8, 1],\n" +
+                                            " [7.00, 2, 1, 5],\n" +
+                                            " [10.5, 3.2, 1, 2]\n" +
+                                            " ]}", PlotData.class)
                     )
             );
 
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
-    public void testRK() throws JsonProcessingException {
+    public void testCalculateProcesses() throws  Exception{
+        GenerateProcessor generateProcessor = new GenerateProcessorImpl();
+        GeneratingResult generatingResult = generateProcessor.generate("no matter");
+
+        //create ObjectMapper instance
         ObjectMapper objectMapper = new ObjectMapper();
+        ToolState toolState = new ToolState(
+                objectMapper.readValue(
+                        prepareInputJsonString(generatingResult.getCode()),
+                        Variant.class
+                )
+        );
 
-        CalculateTask task = new CalculateTask(new BigDecimal("1"), new BigDecimal("6.546"));
-        GenerateCodeResult variantCode = new GenerateCodeResult(new BigDecimal[]{new BigDecimal(3), new BigDecimal(6)}, ONE);
-        GenerateInstructionsResult variantInstr = new GenerateInstructionsResult(new BigDecimal(0.3), new BigDecimal(0.1));
+        CalculateProcessor calculateProcessor = new CalculateProcessorImpl();
 
-        CalculateCodeResult result = new RungeKuttaLab1().calculate(task, variantCode, variantInstr);
+        CalculatingResult calculatingResult = calculateProcessor.calculate("", escapeParam(objectMapper.writeValueAsString(toolState)), generatingResult);
 
-        System.out.println(objectMapper.writeValueAsString(result));
-    }
-
-    @Test
-    public void realLifeParsingCalculateTask() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        String value = prepareInputJsonString("{\"r\":3,\"t\":8}");
-        CalculateTask t = objectMapper.readValue(value, CalculateTask.class);
-
-        assertNotNull(t);
-        assertEquals(3, t.getRadius().intValue());
+        System.out.println(calculatingResult.getCode());
     }
 
 
