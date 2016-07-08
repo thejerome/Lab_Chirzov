@@ -21,12 +21,9 @@ function init_lab() {
     var data_plot_user = [];
     var light_edge;
     var slits_light_edge;
-    //light_screen_range - промежуток расстрояний между источником (источник - пластина с одной щелью) и экраном, сумма расстояний
-    //от источника до щелей и от щелей до экрана не должна выходить за границы этого промежутка.
-    //intensity visibility interference - последовательность данных в массиве
     var default_variant = {
         "light_slits_distance": 1,
-        "slits_screen_distance": 40,
+        "light_screen_distance": 40,
         "light_screen_range": [1, 40],
         "light_screen_step": 1,
         "light_width": 5,
@@ -63,18 +60,18 @@ function init_lab() {
         '<label for="control_light_length"> &lambda;: <input class="control_light_length" ' +
         'id="control_light_length" type="range"/><input class="light_length_value" type="text"/> нм</label>' +
         '<label for="control_light_slits"> <i>D</i>: <input class="control_light_slits" ' +
-        'id="control_light_slits" type="range"/><input class="light_slits_value" type="text"/> см</label>' +
+        'id="control_light_slits" type="range"/><input class="light_slits_value" type="text"/> м</label>' +
         '<label for="control_slits_screen"> <i>d</i>: <input class="control_slits_screen" ' +
-        'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="text"/> см</label></div>' +
+        'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="text"/> м</label></div>' +
         '<div class="workspace_light_source"><div class="light_source_screen"><div class="light_source_slit"></div></div><label ' +
         'for="control_light_width"> &alpha;: <input class="control_light_width" id="control_light_width" type="range"/>' +
-        '<input class="light_width_value" type="text"/> см</label>' +
+        '<input class="light_width_value" type="text"/> м</label>' +
         '</div><div class="workspace_slits">' +
         '<input class="check_left_slit check_slit btn small_btn" slit_id="1" type="checkbox"/><div class="slits_screen">' +
         '<div class="slit slit_1"></div><div class="slit slit_2">' +
         '</div></div><input class="check_right_slit check_slit btn small_btn" slit_id="2" type="checkbox"/>' +
         '<label for="control_slits_width"> <i>A</i>: <input class="control_slits_width" ' +
-        'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> см</label>' +
+        'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> м</label>' +
         '</div><div class="workspace_screen">' +
         '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="185" height="105"></svg></div>' +
         '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="185" height="105"></svg></div>' +
@@ -149,7 +146,7 @@ function init_lab() {
         fill_range(".control_light_width", ".light_width_value", variant.light_width, variant.light_width_range, variant.light_width_step);
         fill_range(".control_slits_width", ".slits_width_value", variant.between_slits_width, variant.between_slits_range, variant.between_slits_step);
         fill_range(".control_light_slits", ".light_slits_value", variant.light_slits_distance, variant.light_screen_range, variant.light_screen_step);
-        fill_range(".control_slits_screen", ".slits_screen_value", variant.slits_screen_distance, variant.light_screen_range, variant.light_screen_step);
+        fill_range(".control_slits_screen", ".slits_screen_value", variant.light_screen_distance, variant.light_screen_range, variant.light_screen_step);
         if (variant.right_slit_closed && variant.left_slit_closed) {
             slits_light_edge = true;
         }
@@ -373,10 +370,7 @@ function init_lab() {
     function launch() {
         controls_blocked = true;
         $(".block_field").addClass("active_waiting");
-        setTimeout(function () {
-            Vlab.calculateHandler();
-        }, 3000);
-        //ANT.calculate();
+        ANT.calculate();
     }
 
     function change_length_range() {
@@ -540,7 +534,7 @@ function init_lab() {
         var parsed_object;
         if (typeof str === 'string' && str !== "") {
             try {
-                parsed_object = str.replace(/&quot;/g, "\"");
+                parsed_object = str.replace(/&quot;/g, "\"").replace(/&minus;/g, "-").replace(/&#0045;/g, "-");
                 parsed_object = JSON.parse(parsed_object);
             } catch (e) {
                 parsed_object = default_object;
@@ -558,7 +552,7 @@ function init_lab() {
                 parsed_object = str.replace(/<br\/>/g, "\r\n").replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;br\/&gt;/g, "\r\n")
                     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-");
                 parsed_object = JSON.parse(parsed_object);
-                parsed_object = parsed_object.table;
+                //parsed_object = parsed_object.table;
             } catch (e) {
                 parsed_object = default_object;
             }
@@ -701,7 +695,7 @@ function init_lab() {
         getResults: function () {
             var answer = {};
             answer.light_slits_distance = parseFloat($(".control_light_slits").val());
-            answer.slits_screen_distance = parseFloat($(".control_slits_screen").val());
+            answer.light_screen_distance = parseFloat($(".control_slits_screen").val());
             answer.light_width = parseFloat($(".control_light_width").val());
             answer.light_length = parseFloat($(".control_light_length").val());
             answer.left_slit_closed = ($(".check_left_slit").prop("checked") === true);
