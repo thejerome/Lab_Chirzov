@@ -2,7 +2,6 @@ package vlab.server_java.model.tool;
 
 import vlab.server_java.model.PlotData;
 import vlab.server_java.model.ToolState;
-import vlab.server_java.model.util.Util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class ToolModel {
         double lambda = state.getLight_length().doubleValue() / pow(10, 9);
         double D = state.getLight_slits_distance().doubleValue();
         double alpha = state.getLight_width().doubleValue();
-        double d = state.getSlits_screen_distance().doubleValue();
+        double d = state.getLight_screen_distance().doubleValue();
         boolean leftSlitClosed = state.isLeft_slit_closed();
         boolean rightSlitClosed = state.isRight_slit_closed();
 

@@ -61,7 +61,7 @@ public class CalculateLogicTests {
                             objectMapper.readValue(
                                     "{\n" +
                                             " \"light_slits_distance\":50,\n" +
-                                            " \"slits_screen_distance\":50,\n" +
+                                            " \"light_screen_distance\":50,\n" +
                                             " \"light_width\":50,\n" +
                                             " \"light_length\":50,\n" +
                                             " \"left_slit_closed\":false,\n" +
@@ -84,6 +84,23 @@ public class CalculateLogicTests {
                                             " [10.5, 3.2, 1, 2]\n" +
                                             " ]}", PlotData.class)
                     )
+            );
+
+    }
+
+    @Test
+    public void testRealWorldJson() throws  Exception{
+        //create ObjectMapper instance
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        //convert json string to object
+
+
+            System.out.println(objectMapper.writeValueAsString(
+                            objectMapper.readValue(
+                                    "{\"light_slits_distance\":0.01,\"light_screen_distance\":0.4,\"light_width\":0.05,\"light_length\":721,\"left_slit_closed\":false,\"right_slit_closed\":false,\"between_slits_width\":0.01}",
+                                    ToolState.class)
+                            )
             );
 
     }
