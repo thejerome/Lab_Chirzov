@@ -46,8 +46,8 @@ public class GenerateProcessorImpl implements GenerateProcessor {
 
 
             BigDecimal light_slits_distance = bd(0.5);
-            BigDecimal slits_screen_distance = bd(0.7);
-            BigDecimal[] light_screen_range = new BigDecimal[]{bd(0.01), bd(0.4)};
+            BigDecimal light_screen_distance = bd(0.7);
+            BigDecimal[] light_screen_range = new BigDecimal[]{bd(0.01), bd(2)};
             BigDecimal light_screen_step = bd(0.01);
             BigDecimal light_width = bd(0.05);
             BigDecimal[] light_width_range = new BigDecimal[]{bd(0.001), bd(0.1)};
@@ -63,7 +63,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             List<BigDecimal[]> data_plot_pattern = ToolModel.buildPlot(
                     new ToolState(
                             light_slits_distance,
-                            slits_screen_distance,
+                            light_screen_distance,
                             light_width,
                             light_length,
                             between_slits_width,
@@ -74,7 +74,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
 
             code = mapper.writeValueAsString(
                     new Variant(light_slits_distance,
-                            slits_screen_distance,
+                            light_screen_distance,
                             light_screen_range,
                             light_screen_step,
                             light_width,

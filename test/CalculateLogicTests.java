@@ -103,9 +103,31 @@ public class CalculateLogicTests {
                             )
             );
 
+
+
     }
 
     @Test
+    public void testRealWorldCalculateProcesses() throws  Exception{
+        GenerateProcessor generateProcessor = new GenerateProcessorImpl();
+        GeneratingResult generatingResult = generateProcessor.generate("no matter");
+
+        //create ObjectMapper instance
+        ObjectMapper objectMapper = new ObjectMapper();
+        ToolState toolState = objectMapper.readValue(
+                "{\"light_slits_distance\":0.01,\"light_screen_distance\":0.4,\"light_width\":0.05,\"light_length\":721,\"left_slit_closed\":false,\"right_slit_closed\":false,\"between_slits_width\":0.01}",
+                ToolState.class);
+
+
+        CalculateProcessor calculateProcessor = new CalculateProcessorImpl();
+
+        CalculatingResult calculatingResult = calculateProcessor.calculate("", escapeParam(objectMapper.writeValueAsString(toolState)), generatingResult);
+
+        System.out.println(calculatingResult.getCode());
+    }
+
+
+@Test
     public void testCalculateProcesses() throws  Exception{
         GenerateProcessor generateProcessor = new GenerateProcessorImpl();
         GeneratingResult generatingResult = generateProcessor.generate("no matter");

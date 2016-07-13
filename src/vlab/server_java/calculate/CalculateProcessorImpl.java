@@ -5,6 +5,7 @@ import rlcp.calculate.CalculatingResult;
 import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.calculate.CalculateProcessor;
 import vlab.server_java.model.*;
+import vlab.server_java.model.tool.ToolModel;
 
 import static vlab.server_java.model.util.Util.escapeParam;
 import static vlab.server_java.model.util.Util.prepareInputJsonString;
@@ -33,7 +34,7 @@ public class CalculateProcessorImpl implements CalculateProcessor {
             ToolState toolState = objectMapper.readValue(instructions, ToolState.class);
             Variant varCode = objectMapper.readValue(generatingResult.getCode(), Variant.class);
 
-            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString("")));
+            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString(ToolModel.buildPlot(toolState))));
         } catch (Exception e) {
             return new CalculatingResult("error", e.toString());
         }
