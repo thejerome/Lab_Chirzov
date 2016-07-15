@@ -552,7 +552,7 @@ function init_lab() {
                 parsed_object = str.replace(/<br\/>/g, "\r\n").replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;br\/&gt;/g, "\r\n")
                     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-");
                 parsed_object = JSON.parse(parsed_object);
-                //parsed_object = parsed_object.table;
+                parsed_object = parsed_object.data_plot;
             } catch (e) {
                 parsed_object = default_object;
             }
