@@ -22,10 +22,10 @@ function init_lab() {
     var light_edge;
     var slits_light_edge;
     var default_variant = {
-        "light_slits_distance": 1,
-        "light_screen_distance": 40,
-        "light_screen_range": [1, 40],
-        "light_screen_step": 1,
+        "light_slits_distance": 0.5,
+        "light_screen_distance": 0.7,
+        "light_screen_range": [0.01, 2],
+        "light_screen_step": 0.01,
         "light_width": 5,
         "light_width_range": [0.1, 10],
         "light_width_step": 0.1,
@@ -153,7 +153,7 @@ function init_lab() {
         parse_lightwave_width($(".control_light_width").val(), variant.light_width_range);
         parse_slits_width($(".control_slits_width").val(), variant.between_slits_range);
         parse_light_slits($(".control_light_slits").val(), variant.light_screen_range);
-        parse_slits_screen($(".control_slits_screen").val(), variant.light_screen_range);
+        parse_light_screen($(".control_slits_screen").val(), variant.light_screen_range);
         parse_lightwave_length($(".control_light_length").val());
         if (variant.right_slit_closed) {
             $(".check_right_slit").prop("checked", true);
@@ -252,19 +252,19 @@ function init_lab() {
         draw_light(light_color_hex, light_edge);
     }
 
-    function parse_lightwave_width(width_in_sm, range) {
-        var width_in_percent = (width_in_sm / range[1]) * 50;
+    function parse_lightwave_width(width_in_m, range) {
+        var width_in_percent = (width_in_m / range[1]) * 50;
         $(".light_source_slit").css("width", width_in_percent + "%");
     }
 
-    function parse_slits_width(width_in_sm, range) {
-        var width_in_percent = width_in_sm / range[1] / 2;
+    function parse_slits_width(width_in_m, range) {
+        var width_in_percent = width_in_m / range[1] / 2;
         $(".slit.slit_1").css("left", 40 - width_in_percent * 40 + "%");
         $(".slit.slit_2").css("right", 40 - width_in_percent * 40 + "%");
     }
 
-    function parse_light_slits(width_in_sm, range) {
-        var width_in_percent = width_in_sm / range[1];
+    function parse_light_slits(width_in_m, range) {
+        var width_in_percent = width_in_m / range[1];
         $(".part_slits").css("left", 28 + width_in_percent * 60 + "%");
         if (slits_light_edge) {
             light_edge = $(".part_slits").position().left - $(".part_light").position().left;
@@ -274,8 +274,8 @@ function init_lab() {
         draw_light(light_color_hex, light_edge);
     }
 
-    function parse_slits_screen(width_in_sm, range) {
-        var width_in_percent = width_in_sm / range[1];
+    function parse_light_screen(width_in_m, range) {
+        var width_in_percent = width_in_m / range[1];
         $(".part_screen").css("left", 28 + width_in_percent * 60 + "%");
         if (slits_light_edge) {
             light_edge = $(".part_slits").position().left - $(".part_light").position().left;
@@ -462,7 +462,7 @@ function init_lab() {
 
     function change_light_slits_range() {
         if ($(".control_light_slits").val() >= (parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH)) {
-            $(".control_light_slits").val(parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH - 1);
+            $(".control_light_slits").val(parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH - laboratory_variant.light_screen_step);
         }
         $(".light_slits_value").val($(".control_light_slits").val());
         parse_light_slits($(".control_light_slits").val(), laboratory_variant.light_screen_range);
@@ -471,7 +471,7 @@ function init_lab() {
     function change_light_slits_input() {
         if ($.isNumeric($(".light_slits_value").val())) {
             if ($(".light_slits_value").val() >= (parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH)) {
-                $(".light_slits_value").val(parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH - 1);
+                $(".light_slits_value").val(parseFloat($(".control_slits_screen").val()) - PLATE_WIDTH - laboratory_variant.light_screen_step);
             }
             if (($(".light_slits_value").val() <= laboratory_variant.light_screen_range[1]) &
                 ($(".light_slits_value").val() >= laboratory_variant.light_screen_range[0])) {
@@ -497,16 +497,16 @@ function init_lab() {
 
     function change_slits_screen_range() {
         if ($(".control_slits_screen").val() <= (parseFloat($(".control_light_slits").val()) + PLATE_WIDTH)) {
-            $(".control_slits_screen").val(parseFloat($(".control_light_slits").val()) + PLATE_WIDTH + 1);
+            $(".control_slits_screen").val(parseFloat($(".control_light_slits").val()) + PLATE_WIDTH + laboratory_variant.light_screen_step);
         }
         $(".slits_screen_value").val($(".control_slits_screen").val());
-        parse_slits_screen($(".control_slits_screen").val(), laboratory_variant.light_screen_range);
+        parse_light_screen($(".control_slits_screen").val(), laboratory_variant.light_screen_range);
     }
 
     function change_slits_screen_input() {
         if ($.isNumeric($(".slits_screen_value").val())) {
             if ($(".slits_screen_value").val() <= (parseFloat($(".control_light_slits").val()) + PLATE_WIDTH)) {
-                $(".slits_screen_value").val(parseFloat($(".control_light_slits").val()) + PLATE_WIDTH + 1);
+                $(".slits_screen_value").val(parseFloat($(".control_light_slits").val()) + PLATE_WIDTH + laboratory_variant.light_screen_step);
             }
             if (($(".slits_screen_value").val() <= laboratory_variant.light_screen_range[1]) &
                 ($(".slits_screen_value").val() >= laboratory_variant.light_screen_range[0])) {
@@ -527,7 +527,7 @@ function init_lab() {
             $(".control_slits_screen").val(laboratory_variant.light_screen_range[0]);
             $(".slits_screen_value").val(laboratory_variant.light_screen_range[0]);
         }
-        parse_slits_screen($(".control_slits_screen").val(), laboratory_variant.light_screen_range);
+        parse_light_screen($(".control_slits_screen").val(), laboratory_variant.light_screen_range);
     }
 
     function parse_variant(str, default_object) {
