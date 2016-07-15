@@ -13,7 +13,7 @@ import static vlab.server_java.model.util.Util.shrink;
  * Created by efimchick on 19.04.16.
  *
  * "light_slits_distance": 1,
- "slits_screen_distance": 40,
+ "light_screen_distance": 40,
  "light_screen_range": [1, 40],
  "light_screen_step": 1,
  "light_width": 5,
@@ -42,7 +42,7 @@ import static vlab.server_java.model.util.Util.shrink;
 public class Variant {
 
     private final BigDecimal light_slits_distance;
-    private final BigDecimal slits_screen_distance;
+    private final BigDecimal light_screen_distance;
     private final BigDecimal[] light_screen_range;
     private final BigDecimal light_screen_step;
     private final BigDecimal light_width;
@@ -61,7 +61,7 @@ public class Variant {
     @JsonCreator
     public Variant(
             @JsonProperty("light_slits_distance") BigDecimal light_slits_distance,
-            @JsonProperty("slits_screen_distance") BigDecimal slits_screen_distance,
+            @JsonProperty("light_screen_distance") BigDecimal light_screen_distance,
             @JsonProperty("light_screen_range") BigDecimal[] light_screen_range,
             @JsonProperty("light_screen_step") BigDecimal light_screen_step,
             @JsonProperty("light_width") BigDecimal light_width,
@@ -78,7 +78,7 @@ public class Variant {
             @JsonProperty("data_plot_pattern") List<BigDecimal[]> data_plot_pattern) {
 
         Objects.requireNonNull(light_slits_distance);
-        Objects.requireNonNull(slits_screen_distance);
+        Objects.requireNonNull(light_screen_distance);
         Objects.requireNonNull(light_screen_range);
         Objects.requireNonNull(light_screen_step);
         Objects.requireNonNull(light_width);
@@ -110,7 +110,7 @@ public class Variant {
 
 
         this.light_slits_distance = shrink(light_slits_distance);
-        this.slits_screen_distance = shrink(slits_screen_distance);
+        this.light_screen_distance = shrink(light_screen_distance);
         this.light_screen_range = shrink(light_screen_range);
         this.light_screen_step = shrink(light_screen_step);
         this.light_width = shrink(light_width);
@@ -131,8 +131,8 @@ public class Variant {
         return light_slits_distance;
     }
 
-    public BigDecimal getSlits_screen_distance() {
-        return slits_screen_distance;
+    public BigDecimal getLight_screen_distance() {
+        return light_screen_distance;
     }
 
     public BigDecimal[] getLight_screen_range() {

@@ -64,7 +64,7 @@ public class ToolState {
     public ToolState(Variant variant) {
         this(
                 variant.getLight_slits_distance(),
-                variant.getSlits_screen_distance(),
+                variant.getLight_screen_distance(),
                 variant.getLight_width(),
                 variant.getLight_length(),
                 variant.getBetween_slits_width(),
