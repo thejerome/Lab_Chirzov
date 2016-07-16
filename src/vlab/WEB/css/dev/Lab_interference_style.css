@@ -291,13 +291,6 @@
     align-content: space-around;
 }
 
-.workspace_intensity_plot .intensity_plot_user,
-.workspace_visibility_plot .visibility_plot_user,
-.workspace_intensity_plot .intensity_plot_pattern,
-.workspace_visibility_plot .visibility_plot_pattern {
-    width: 90%;
-}
-
 .axis path,
 .axis line {
     fill: none;
@@ -315,15 +308,10 @@
 
 .workspace_screen .screen_pattern,
 .workspace_screen .screen_user,
-.workspace_screen .screen_comparison,
-.workspace_intensity_plot .intensity_plot_pattern,
-.workspace_intensity_plot .intensity_plot_user,
-.workspace_intensity_plot .intensity_comparison,
-.workspace_visibility_plot .visibility_plot_pattern,
-.workspace_visibility_plot .visibility_plot_user,
-.workspace_visibility_plot .visibility_comparison {
-    margin-left: 25px;
-    margin-right: 25px;
+.workspace_screen .screen_comparison {
+    width: 90%;
+    height: 72%;
+    margin-top: 0;
 }
 
 .screen_pattern_show,

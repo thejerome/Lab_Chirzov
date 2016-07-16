@@ -73,23 +73,23 @@ function init_lab() {
         '<label for="control_slits_width"> <i>A</i>: <input class="control_slits_width" ' +
         'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> м</label>' +
         '</div><div class="workspace_screen">' +
-        '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="185" height="105"></svg></div>' +
-        '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="185" height="105"></svg></div>' +
-        '<div class="screen_comparison plot_comparison screen_user_on screen_pattern_on"><svg width="185" height="105"></svg></div>' +
+        '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="240" height="125"></svg></div>' +
+        '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="240" height="125"></svg></div>' +
+        '<div class="screen_comparison plot_comparison screen_user_on screen_pattern_on"><svg width="240" height="125"></svg></div>' +
         '<div class="screen_pattern_show plot_show not_active" on="screen_pattern" off="screen_pattern_on">Образец</div>' +
         '<div class="screen_user_show plot_show" on="screen_user" off="screen_user_on">Результат</div>' +
         '<div class="screen_comparison_show plot_show" on="screen_comparison" off="screen_comparison_on">Сравнение</div>' +
         '</div><div class="workspace_intensity_plot"><div class="plot_title">График интенсивности <i>I</i>(<i>x</i>)</div>' +
-        '<div class="intensity_plot_pattern plot_pattern intensity_comparison_on intensity_plot_user_on"><svg width="350" height="150"></svg></div>' +
-        '<div class="intensity_plot_user plot_user intensity_comparison_on intensity_plot_pattern_on"><svg width="350" height="150"></svg></div>' +
-        '<div class="intensity_comparison plot_comparison intensity_plot_user_on intensity_plot_pattern_on"><svg width="350" height="150"></svg></div>' +
+        '<div class="intensity_plot_pattern plot_pattern intensity_comparison_on intensity_plot_user_on"><svg width="380" height="150"></svg></div>' +
+        '<div class="intensity_plot_user plot_user intensity_comparison_on intensity_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
+        '<div class="intensity_comparison plot_comparison intensity_plot_user_on intensity_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
         '<div class="intensity_plot_pattern_show plot_show not_active" on="intensity_plot_pattern" off="intensity_plot_pattern_on">Образец</div>' +
         '<div class="intensity_plot_user_show plot_show" on="intensity_plot_user" off="intensity_plot_user_on">Результат</div>' +
         '<div class="intensity_comparison_show plot_show" on="intensity_comparison" off="intensity_comparison_on">Сравнение</div>' +
         '</div><div class="workspace_visibility_plot"><div class="plot_title">График видимости <i>V</i>(<i>x</i>)</div>' +
-        '<div class="visibility_plot_pattern plot_pattern visibility_comparison_on visibility_plot_user_on"><svg width="350" height="150"></svg></div>' +
-        '<div class="visibility_plot_user plot_user visibility_comparison_on visibility_plot_pattern_on"><svg width="350" height="150"></svg></div>' +
-        '<div class="visibility_comparison plot_comparison visibility_plot_user_on visibility_plot_pattern_on"><svg width="350" height="150"></svg></div>' +
+        '<div class="visibility_plot_pattern plot_pattern visibility_comparison_on visibility_plot_user_on"><svg width="380" height="150"></svg></div>' +
+        '<div class="visibility_plot_user plot_user visibility_comparison_on visibility_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
+        '<div class="visibility_comparison plot_comparison visibility_plot_user_on visibility_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
         '<div class="visibility_plot_pattern_show plot_show not_active" on="visibility_plot_pattern" off="visibility_plot_pattern_on">Образец</div>' +
         '<div class="visibility_plot_user_show plot_show" on="visibility_plot_user" off="visibility_plot_user_on">Результат</div>' +
         '<div class="visibility_comparison_show plot_show" on="visibility_comparison" off="visibility_comparison_on">Сравнение</div>' +
@@ -163,9 +163,9 @@ function init_lab() {
             $(".check_left_slit").prop("checked", true);
             $(".slit.slit_1").css("width", 0);
         }
-        init_plot(variant.data_plot_pattern, ".intensity_plot_pattern svg", 1, 350, 150, true, 40, 10, false);
-        init_plot(variant.data_plot_pattern, ".visibility_plot_pattern svg", 2, 350, 150, true, 40, 10, false);
-        init_plot(variant.data_plot_pattern, ".screen_pattern svg", 3, 185, 105, false, 10, 10, false);
+        init_plot(variant.data_plot_pattern, ".intensity_plot_pattern svg", 1, 380, 150, true, 70, 10, 20, false);
+        init_plot(variant.data_plot_pattern, ".visibility_plot_pattern svg", 2, 380, 150, true, 70, 10, 20, false);
+        init_plot(variant.data_plot_pattern, ".screen_pattern svg", 3, 240, 125, false, 10, 10, 40, false);
     }
 
     function wavelength_to_rgb(wavelength) {
@@ -297,7 +297,7 @@ function init_lab() {
         }
     }
 
-    function init_plot(data, plot_selector, y_coefficient, width, height, draw_y_axis, margin_left, margin_right, comparison_mode, comparison_data) {
+    function init_plot(data, plot_selector, y_coefficient, width, height, draw_y_axis, margin_left, margin_right, margin_bottom, comparison_mode, comparison_data) {
         $(plot_selector).empty();
         var plot = d3.select(plot_selector),
             WIDTH = width,
@@ -305,7 +305,7 @@ function init_lab() {
             MARGINS = {
                 top: 20,
                 right: margin_right,
-                bottom: 20,
+                bottom: margin_bottom,
                 left: margin_left
             };
         var concat_data = data;
@@ -325,7 +325,7 @@ function init_lab() {
             return d[y_coefficient];
         });
         var x_range = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([x_min, x_max]);
-        var y_range = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([y_min, y_max]);
+        var y_range = d3.scale.linear().range([HEIGHT - MARGINS.bottom, MARGINS.bottom]).domain([y_min, y_max]);
         var x_axis = d3.svg.axis()
                 .scale(x_range)
                 .tickSize(5)
@@ -341,7 +341,18 @@ function init_lab() {
         plot.append("svg:g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-            .call(x_axis);
+            .call(x_axis)
+            .each(function(d){
+                if (!draw_y_axis) {
+                    d3.select(this)
+                        .selectAll("text")
+                        .attr("y", -2)
+                        .attr("x", 10)
+                        .attr("dy", ".35em")
+                        .attr("transform", "rotate(90)")
+                        .style("text-anchor", "start");
+                }
+            });
         plot.append("svg:path")
             .attr("d", line_func(data))
             .attr("stroke", light_color_hex)
@@ -676,12 +687,12 @@ function init_lab() {
         },
         calculateHandler: function () {
             data_plot_user = parse_calculate_results(arguments[0], default_plot_data);
-            init_plot(data_plot_user, ".intensity_plot_user svg", 1, 350, 150, true, 40, 10, false);
-            init_plot(data_plot_user, ".visibility_plot_user svg", 2, 350, 150, true, 40, 10, false);
-            init_plot(data_plot_user, ".screen_user svg", 3, 185, 105, false, 10, 10, false);
-            init_plot(data_plot_user, ".intensity_comparison svg", 1, 350, 150, true, 40, 10, true, laboratory_variant.data_plot_pattern);
-            init_plot(data_plot_user, ".visibility_comparison svg", 2, 350, 150, true, 40, 10, true, laboratory_variant.data_plot_pattern);
-            init_plot(data_plot_user, ".screen_comparison svg", 3, 185, 105, false, 10, 10, true, laboratory_variant.data_plot_pattern);
+            init_plot(data_plot_user, ".intensity_plot_user svg", 1, 380, 150, true, 70, 10, 20, false);
+            init_plot(data_plot_user, ".visibility_plot_user svg", 2, 380, 150, true, 70, 10, 20, false);
+            init_plot(data_plot_user, ".screen_user svg", 3, 240, 125, false, 10, 10, 40, false);
+            init_plot(data_plot_user, ".intensity_comparison svg", 1, 380, 150, true, 70, 10, 20, true, laboratory_variant.data_plot_pattern);
+            init_plot(data_plot_user, ".visibility_comparison svg", 2, 380, 150, true, 70, 10, 20, true, laboratory_variant.data_plot_pattern);
+            init_plot(data_plot_user, ".screen_comparison svg", 3, 240, 125, false, 10, 10, 40, true, laboratory_variant.data_plot_pattern);
             $(".plot_pattern").css("display", "none");
             $(".plot_comparison").css("display", "none");
             $(".plot_user").css("display", "block");
