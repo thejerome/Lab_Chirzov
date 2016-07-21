@@ -45,7 +45,7 @@ public class GenerateLogicTests {
             System.out.println(objectMapper.writeValueAsString(
                             objectMapper.readValue(
                                     "{\"light_slits_distance\": 1,\n" +
-                                            " \"slits_screen_distance\": 40,\n" +
+                                            " \"light_screen_distance\": 40,\n" +
                                             " \"light_screen_range\": [1, 40],\n" +
                                             " \"light_screen_step\": 1,\n" +
                                             " \"light_width\": 5,\n" +
@@ -59,6 +59,7 @@ public class GenerateLogicTests {
                                             " \"between_slits_width\": 1,\n" +
                                             " \"between_slits_range\": [0.1, 2],\n" +
                                             " \"between_slits_step\": 0.1,\n" +
+                                            " \"visibility\": 1,\n" +
                                             " \"data_plot_pattern\": [\n" +
                                             " [0.01, 0.3, 3.5, 1],\n" +
                                             " [1.01, 0.8, 3.5, 2],\n" +

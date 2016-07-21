@@ -26,15 +26,23 @@ import static vlab.server_java.model.util.Util.shrink;
  */
 public class PlotData {
     private final List<BigDecimal[]> data_plot;
+    private final BigDecimal visibility;
 
     @JsonCreator
     public PlotData(
-            @JsonProperty("data_plot") List<BigDecimal[]> data_plot) {
+            @JsonProperty("data_plot") List<BigDecimal[]> data_plot,
+            @JsonProperty("visibility") BigDecimal visibility) {
         Objects.requireNonNull(data_plot);
+        Objects.requireNonNull(visibility);
         this.data_plot = Collections.unmodifiableList(shrink(data_plot));
+        this.visibility = shrink(visibility);
     }
 
     public List<BigDecimal[]> getData_plot() {
         return data_plot;
+    }
+
+    public BigDecimal getVisibility() {
+        return visibility;
     }
 }

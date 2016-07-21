@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import rlcp.generate.GeneratingResult;
 import rlcp.server.processor.generate.GenerateProcessor;
+import vlab.server_java.model.PlotData;
 import vlab.server_java.model.ToolState;
 import vlab.server_java.model.Variant;
 import vlab.server_java.model.tool.ToolModel;
@@ -45,22 +46,22 @@ public class GenerateProcessorImpl implements GenerateProcessor {
 */
 
 
-            BigDecimal light_slits_distance = bd(0.5);
-            BigDecimal light_screen_distance = bd(0.7);
-            BigDecimal[] light_screen_range = new BigDecimal[]{bd(0.01), bd(2)};
-            BigDecimal light_screen_step = bd(0.01);
-            BigDecimal light_width = bd(0.05);
-            BigDecimal[] light_width_range = new BigDecimal[]{bd(0.001), bd(0.1)};
-            BigDecimal light_width_step = bd(0.001);
-            BigDecimal light_length = bd(721);
-            BigDecimal[] light_length_range = new BigDecimal[]{bd(380), bd(780)};
-            BigDecimal light_length_step = bd(1);
+            BigDecimal light_slits_distance = bd("0.5");
+            BigDecimal light_screen_distance = bd("0.7");
+            BigDecimal[] light_screen_range = new BigDecimal[]{bd("0.01"), bd("2")};
+            BigDecimal light_screen_step = bd("0.01");
+            BigDecimal light_width = bd("0.05");
+            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("1")};
+            BigDecimal light_width_step = bd("0.01");
+            BigDecimal light_length = bd("721");
+            BigDecimal[] light_length_range = new BigDecimal[]{bd("380"), bd("780")};
+            BigDecimal light_length_step = bd("1");
             boolean right_slit_closed = false;
             boolean left_slit_closed = false;
-            BigDecimal between_slits_width = bd(0.01);
-            BigDecimal[] between_slits_range = new BigDecimal[]{bd(0.001), bd(0.02)};
-            BigDecimal between_slits_step = bd(0.001);
-            List<BigDecimal[]> data_plot_pattern = ToolModel.buildPlot(
+            BigDecimal between_slits_width = bd("0.01");
+            BigDecimal[] between_slits_range = new BigDecimal[]{bd("0.01"), bd("10")};
+            BigDecimal between_slits_step = bd("0.01");
+            PlotData plotData = ToolModel.buildPlot(
                     new ToolState(
                             light_slits_distance,
                             light_screen_distance,
@@ -70,7 +71,9 @@ public class GenerateProcessorImpl implements GenerateProcessor {
                             left_slit_closed,
                             right_slit_closed
                     )
-            ).getData_plot();
+            );
+            List<BigDecimal[]> data_plot_pattern = plotData.getData_plot();
+            BigDecimal visibility = plotData.getVisibility();
 
             code = mapper.writeValueAsString(
                     new Variant(light_slits_distance,
@@ -88,6 +91,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
                             between_slits_width,
                             between_slits_range,
                             between_slits_step,
+                            visibility,
                             data_plot_pattern
                     )
             );

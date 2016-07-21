@@ -72,7 +72,8 @@ public class CalculateLogicTests {
             );
             System.out.println(objectMapper.writeValueAsString(
                             objectMapper.readValue(
-                                    "{ \"data_plot\": [\n" +
+                                    "{ \"visibility\": 1, " +
+                                            "\"data_plot\": [\n" +
                                             " [0.01, 0, 3.5, 2],\n" +
                                             " [1.01, 0.8, 3.5, 2],\n" +
                                             " [2.02, 3, 6, 0],\n" +

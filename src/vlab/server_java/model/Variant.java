@@ -56,6 +56,7 @@ public class Variant {
     private final BigDecimal between_slits_width;
     private final BigDecimal[] between_slits_range;
     private final BigDecimal between_slits_step;
+    private final BigDecimal visibility;
     private final List<BigDecimal[]> data_plot_pattern;
 
     @JsonCreator
@@ -75,6 +76,7 @@ public class Variant {
             @JsonProperty("between_slits_width") BigDecimal between_slits_width,
             @JsonProperty("between_slits_range") BigDecimal[] between_slits_range,
             @JsonProperty("between_slits_step") BigDecimal between_slits_step,
+            @JsonProperty("visibility") BigDecimal visibility,
             @JsonProperty("data_plot_pattern") List<BigDecimal[]> data_plot_pattern) {
 
         Objects.requireNonNull(light_slits_distance);
@@ -92,6 +94,7 @@ public class Variant {
         Objects.requireNonNull(between_slits_width);
         Objects.requireNonNull(between_slits_range);
         Objects.requireNonNull(between_slits_step);
+        Objects.requireNonNull(visibility);
         Objects.requireNonNull(data_plot_pattern);
 
 
@@ -125,6 +128,7 @@ public class Variant {
         this.between_slits_range = shrink(between_slits_range);
         this.between_slits_step = shrink(between_slits_step);
         this.data_plot_pattern = shrink(data_plot_pattern);
+        this.visibility = shrink(visibility);
     }
 
     public BigDecimal getLight_slits_distance() {
@@ -185,6 +189,10 @@ public class Variant {
 
     public BigDecimal getBetween_slits_step() {
         return between_slits_step;
+    }
+
+    public BigDecimal getVisibility() {
+        return visibility;
     }
 
     public List<BigDecimal[]> getData_plot_pattern() {
