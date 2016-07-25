@@ -1,22 +1,16 @@
 function init_lab() {
+    var MAX_INTENSITY = 4;
+    var MIN_INTENSITY = 0;
     var container;
     var controls_blocked = false;
-    var previous_solution;
     var help_active = false;
     var light_color_hex = "";
     var light_color_hex_default = "";
     var laboratory_variant;
     var PLATE_WIDTH = 0;
     var default_plot_data = [
-        [0.01, 0, 3.5, 2],
-        [1.01, 0.8, 3.5, 2],
-        [2.02, 3, 6, 0],
-        [3.03, 1.4, 0, 5],
-        [4.04, 0.9, 3.1, 0],
-        [5.05, 2.3, 2.5, 0],
-        [6.06, 2.8, 8, 1],
-        [7.00, 2, 1, 5],
-        [10.5, 3.2, 1, 2]
+        [0.01, 0],
+        [1.01, 0.8]
     ];
     var data_plot_user = [];
     var light_edge;
@@ -37,16 +31,10 @@ function init_lab() {
         "between_slits_width": 1,
         "between_slits_range": [0.1, 2],
         "between_slits_step": 0.1,
+        "visibility": 0.2,
         "data_plot_pattern": [
-            [0.01, 0.3, 3.5, 1],
-            [1.01, 0.8, 3.5, 2],
-            [2.02, 1.2, 3.6, 0],
-            [3.03, 1.4, 3.7, 3],
-            [4.04, 1.9, 3.1, 0],
-            [5.05, 2.3, 2.5, 5],
-            [6.06, 2.8, 4, 1],
-            [7.00, 2.9, 1, 3],
-            [10.5, 3.2, 1, 2]
+            [0.01, 0.3],
+            [10.5, 3.2]
         ]
     };
     var window = '<div class="vlab_setting"><div class="block_title">' +
@@ -65,34 +53,28 @@ function init_lab() {
         'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="text"/> м</label></div>' +
         '<div class="workspace_light_source"><div class="light_source_screen"><div class="light_source_slit"></div></div><label ' +
         'for="control_light_width"> &alpha;: <input class="control_light_width" id="control_light_width" type="range"/>' +
-        '<input class="light_width_value" type="text"/> м</label>' +
+        '<input class="light_width_value" type="text"/> мм</label>' +
         '</div><div class="workspace_slits">' +
         '<input class="check_left_slit check_slit btn small_btn" slit_id="1" type="checkbox"/><div class="slits_screen">' +
         '<div class="slit slit_1"></div><div class="slit slit_2">' +
         '</div></div><input class="check_right_slit check_slit btn small_btn" slit_id="2" type="checkbox"/>' +
         '<label for="control_slits_width"> <i>A</i>: <input class="control_slits_width" ' +
-        'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> м</label>' +
+        'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> мм</label>' +
         '</div><div class="workspace_screen">' +
-        '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="240" height="125"></svg></div>' +
-        '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="240" height="125"></svg></div>' +
-        '<div class="screen_comparison plot_comparison screen_user_on screen_pattern_on"><svg width="240" height="125"></svg></div>' +
+        '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="240" height="132"></svg></div>' +
+        '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="240" height="132"></svg></div>' +
         '<div class="screen_pattern_show plot_show not_active" on="screen_pattern" off="screen_pattern_on">Образец</div>' +
         '<div class="screen_user_show plot_show" on="screen_user" off="screen_user_on">Результат</div>' +
-        '<div class="screen_comparison_show plot_show" on="screen_comparison" off="screen_comparison_on">Сравнение</div>' +
         '</div><div class="workspace_intensity_plot"><div class="plot_title">График интенсивности <i>I</i>(<i>x</i>)</div>' +
-        '<div class="intensity_plot_pattern plot_pattern intensity_comparison_on intensity_plot_user_on"><svg width="380" height="150"></svg></div>' +
-        '<div class="intensity_plot_user plot_user intensity_comparison_on intensity_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
-        '<div class="intensity_comparison plot_comparison intensity_plot_user_on intensity_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
+        '<div class="intensity_plot_pattern plot_pattern intensity_comparison_on intensity_plot_user_on"><svg width="550" height="150"></svg></div>' +
+        '<div class="intensity_plot_user plot_user intensity_comparison_on intensity_plot_pattern_on"><svg width="550" height="150"></svg></div>' +
+        '<div class="intensity_comparison plot_comparison intensity_plot_user_on intensity_plot_pattern_on"><svg width="550" height="150"></svg></div>' +
         '<div class="intensity_plot_pattern_show plot_show not_active" on="intensity_plot_pattern" off="intensity_plot_pattern_on">Образец</div>' +
         '<div class="intensity_plot_user_show plot_show" on="intensity_plot_user" off="intensity_plot_user_on">Результат</div>' +
         '<div class="intensity_comparison_show plot_show" on="intensity_comparison" off="intensity_comparison_on">Сравнение</div>' +
-        '</div><div class="workspace_visibility_plot"><div class="plot_title">График видимости <i>V</i>(<i>x</i>)</div>' +
-        '<div class="visibility_plot_pattern plot_pattern visibility_comparison_on visibility_plot_user_on"><svg width="380" height="150"></svg></div>' +
-        '<div class="visibility_plot_user plot_user visibility_comparison_on visibility_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
-        '<div class="visibility_comparison plot_comparison visibility_plot_user_on visibility_plot_pattern_on"><svg width="380" height="150"></svg></div>' +
-        '<div class="visibility_plot_pattern_show plot_show not_active" on="visibility_plot_pattern" off="visibility_plot_pattern_on">Образец</div>' +
-        '<div class="visibility_plot_user_show plot_show" on="visibility_plot_user" off="visibility_plot_user_on">Результат</div>' +
-        '<div class="visibility_comparison_show plot_show" on="visibility_comparison" off="visibility_comparison_on">Сравнение</div>' +
+        '</div><div class="workspace_visibility_plot"><div class="plot_title">Значение видимости <i>V</i></div>' +
+        '<div class="visibility_plot_pattern_show">Образец: <div class="visibility_pattern_value"></div></div>' +
+        '<div class="visibility_plot_user_show">Результат: <div class="visibility_user_value"></div></div>' +
         '</div></div><div class="block_help">Справка</div></div>';
 
     function draw_light(color, edge) {
@@ -163,9 +145,9 @@ function init_lab() {
             $(".check_left_slit").prop("checked", true);
             $(".slit.slit_1").css("width", 0);
         }
-        init_plot(variant.data_plot_pattern, ".intensity_plot_pattern svg", 1, 380, 150, true, 70, 10, 20, false);
-        init_plot(variant.data_plot_pattern, ".visibility_plot_pattern svg", 2, 380, 150, true, 70, 10, 20, false);
-        init_plot(variant.data_plot_pattern, ".screen_pattern svg", 3, 240, 125, false, 10, 10, 40, false);
+        init_plot(variant.data_plot_pattern, ".intensity_plot_pattern svg", 1, 550, 150, 40, 30, 20, false);
+        init_interference_picture(variant.data_plot_pattern, ".screen_pattern svg", 240, 132, light_color_hex_default);
+        $(".visibility_pattern_value").html(variant.visibility);
     }
 
     function wavelength_to_rgb(wavelength) {
@@ -259,8 +241,8 @@ function init_lab() {
 
     function parse_slits_width(width_in_m, range) {
         var width_in_percent = width_in_m / range[1] / 2;
-        $(".slit.slit_1").css("left", 40 - width_in_percent * 40 + "%");
-        $(".slit.slit_2").css("right", 40 - width_in_percent * 40 + "%");
+        $(".slit.slit_1").css("left", 49 - width_in_percent * 50 + "%");
+        $(".slit.slit_2").css("right", 49 - width_in_percent * 50 + "%");
     }
 
     function parse_light_slits(width_in_m, range) {
@@ -297,7 +279,7 @@ function init_lab() {
         }
     }
 
-    function init_plot(data, plot_selector, y_coefficient, width, height, draw_y_axis, margin_left, margin_right, margin_bottom, comparison_mode, comparison_data) {
+    function init_plot(data, plot_selector, y_coefficient, width, height, margin_left, margin_right, margin_bottom, comparison_mode, comparison_data) {
         $(plot_selector).empty();
         var plot = d3.select(plot_selector),
             WIDTH = width,
@@ -318,57 +300,46 @@ function init_lab() {
         var y_min = d3.min(concat_data, function (d) {
             return d[y_coefficient];
         });
+        y_min = (y_min < MIN_INTENSITY) ? y_min : MIN_INTENSITY;
         var x_max = d3.max(concat_data, function (d) {
             return d[0];
         });
-        var y_max =  d3.max(concat_data, function (d) {
+        var y_max = d3.max(concat_data, function (d) {
             return d[y_coefficient];
         });
+        y_max = (y_max > MAX_INTENSITY) ? y_max : MAX_INTENSITY;
         var x_range = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([x_min, x_max]);
         var y_range = d3.scale.linear().range([HEIGHT - MARGINS.bottom, MARGINS.bottom]).domain([y_min, y_max]);
         var x_axis = d3.svg.axis()
-                .scale(x_range)
-                .tickSize(5)
-                .tickSubdivide(true);
+            .scale(x_range)
+            .tickSize(5)
+            .tickSubdivide(true);
         var line_func = d3.svg.line()
-                .x(function (d) {
-                    return x_range(d[0]);
-                })
-                .y(function (d) {
-                    return y_range(d[y_coefficient]);
-                })
-                .interpolate('basis');
+            .x(function (d) {
+                return x_range(d[0]);
+            })
+            .y(function (d) {
+                return y_range(d[y_coefficient]);
+            })
+            .interpolate('cardinal');
         plot.append("svg:g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-            .call(x_axis)
-            .each(function(d){
-                if (!draw_y_axis) {
-                    d3.select(this)
-                        .selectAll("text")
-                        .attr("y", -2)
-                        .attr("x", 10)
-                        .attr("dy", ".35em")
-                        .attr("transform", "rotate(90)")
-                        .style("text-anchor", "start");
-                }
-            });
+            .call(x_axis);
         plot.append("svg:path")
             .attr("d", line_func(data))
             .attr("stroke", light_color_hex)
             .attr("stroke-width", 2)
             .attr("fill", "none");
-        if (draw_y_axis) {
-            var y_axis = d3.svg.axis()
-                    .scale(y_range)
-                    .tickSize(5)
-                    .orient("left")
-                    .tickSubdivide(true);
-            plot.append("svg:g")
-                .attr("class", "y axis")
-                .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-                .call(y_axis);
-        }
+        var y_axis = d3.svg.axis()
+            .scale(y_range)
+            .tickSize(5)
+            .orient("left")
+            .tickSubdivide(true);
+        plot.append("svg:g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+            .call(y_axis);
         if (comparison_mode) {
             plot.append("svg:path")
                 .attr("d", line_func(comparison_data))
@@ -376,6 +347,32 @@ function init_lab() {
                 .attr("stroke-width", 2)
                 .attr("fill", "none");
         }
+    }
+
+    function init_interference_picture(data, picture_selector, width, height, color) {
+        $(picture_selector).empty();
+        var plot = d3.select(picture_selector),
+            WIDTH = width,
+            HEIGHT = height;
+        console.log(WIDTH/data.length);
+        plot.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i) {
+                return i * (WIDTH / data.length);
+            })
+            .attr("y", function(d) {
+                return 0;
+            })
+            .attr("width", WIDTH / data.length)
+            .attr("height", function(d) {
+                return HEIGHT;
+            })
+            .attr("fill", color)
+            .style("opacity", function(d) {
+                return d[1]/MAX_INTENSITY;
+            });
     }
 
     function launch() {
@@ -563,7 +560,6 @@ function init_lab() {
                 parsed_object = str.replace(/<br\/>/g, "\r\n").replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;br\/&gt;/g, "\r\n")
                     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-");
                 parsed_object = JSON.parse(parsed_object);
-                parsed_object = parsed_object.data_plot;
             } catch (e) {
                 parsed_object = default_object;
             }
@@ -583,16 +579,12 @@ function init_lab() {
         return variant;
     }
 
-    function draw_previous_solution() {
-
-    }
-
     function change_slits_status(that) {
         var slit_id = ".slit_" + $(that).attr("slit_id");
         if ($(that).prop("checked") === true) {
             $(slit_id).css("width", "0");
         } else {
-            $(slit_id).css("width", "10%");
+            $(slit_id).css("width", "1px");
         }
         if ($(".check_left_slit").prop("checked") && $(".check_right_slit").prop("checked")) {
             slits_light_edge = true;
@@ -610,9 +602,6 @@ function init_lab() {
             container = $("#jsLab")[0];
             container.innerHTML = window;
             fill_setting(laboratory_variant);
-            if ($("#previousSolution") !== null && $("#previousSolution").val() !== "") {
-                draw_previous_solution();
-            }
             $(".btn_help").click(function () {
                 show_help();
             });
@@ -687,19 +676,16 @@ function init_lab() {
         },
         calculateHandler: function () {
             data_plot_user = parse_calculate_results(arguments[0], default_plot_data);
-            init_plot(data_plot_user, ".intensity_plot_user svg", 1, 380, 150, true, 70, 10, 20, false);
-            init_plot(data_plot_user, ".visibility_plot_user svg", 2, 380, 150, true, 70, 10, 20, false);
-            init_plot(data_plot_user, ".screen_user svg", 3, 240, 125, false, 10, 10, 40, false);
-            init_plot(data_plot_user, ".intensity_comparison svg", 1, 380, 150, true, 70, 10, 20, true, laboratory_variant.data_plot_pattern);
-            init_plot(data_plot_user, ".visibility_comparison svg", 2, 380, 150, true, 70, 10, 20, true, laboratory_variant.data_plot_pattern);
-            init_plot(data_plot_user, ".screen_comparison svg", 3, 240, 125, false, 10, 10, 40, true, laboratory_variant.data_plot_pattern);
+            init_plot(data_plot_user.data_plot, ".intensity_plot_user svg", 1, 550, 150, 40, 30, 20, false);
+            init_plot(data_plot_user.data_plot, ".intensity_comparison svg", 1, 550, 150, 40, 30, 20, true, laboratory_variant.data_plot_pattern);
+            init_interference_picture(data_plot_user.data_plot, ".screen_user svg", 240, 132, light_color_hex);
+            $(".visibility_user_value").html(data_plot_user.visibility);
             $(".plot_pattern").css("display", "none");
             $(".plot_comparison").css("display", "none");
             $(".plot_user").css("display", "block");
             $(".plot_show").removeClass("not_active");
             $(".screen_user_show").addClass("not_active");
             $(".intensity_plot_user_show").addClass("not_active");
-            $(".visibility_plot_user_show").addClass("not_active");
             $(".block_field").removeClass("active_waiting");
             controls_blocked = false;
         },

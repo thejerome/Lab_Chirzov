@@ -76,6 +76,10 @@
     background-color: #b8b9bc;
 }
 
+.workspace_demonstration .demonstration_part.part_screen {
+    background-color: #000000;
+}
+
 .workspace_demonstration .demonstration_light {
     position: absolute;
     top: 10%;
@@ -111,18 +115,22 @@
 .workspace_screen .screen_pattern,
 .workspace_screen .screen_comparison,
 .workspace_screen .screen_user {
-    margin-top: 10px;
     position: relative;
     width: 70%;
     height: 60%;
     background-color: #b8b9bc;
-    border: 1px solid #3d4652;
+}
+
+.workspace_screen .screen_pattern,
+.workspace_screen .screen_user,
+.workspace_screen .screen_comparison {
+    background-color: #000000;
 }
 
 .slits_screen .slit {
     position: absolute;
-    width: 10%;
-    height: 100%;
+    width: 1px;
+    height: 88%;
     background-color: #fff;
 }
 
@@ -165,7 +173,7 @@
 .light_source_screen .light_source_slit {
     position: absolute;
     width: 20%;
-    height: 100%;
+    height: 88%;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -193,14 +201,13 @@
 }
 
 .block_workspace .workspace_intensity_plot {
-    width: 50%;
+    width: 70%;
     border-top: 1px solid #3d4652;
-    border-right: 1px solid #3d4652;
     height: 40%;
 }
 
 .block_workspace .workspace_visibility_plot {
-    width: 50%;
+    width: 30%;
     border-top: 1px solid #3d4652;
     height: 40%;
 }
@@ -272,23 +279,51 @@
 }
 
 .workspace_intensity_plot .intensity_plot_user,
-.workspace_visibility_plot .visibility_plot_user,
 .workspace_screen .screen_user,
 .workspace_intensity_plot .intensity_comparison,
-.workspace_visibility_plot .visibility_comparison,
 .workspace_screen .screen_comparison {
     display: none;
 }
 
+.slits_screen,
+.light_source_screen {
+    padding: 3% 0;
+}
 
+.workspace_intensity_plot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
 
-.workspace_intensity_plot,
 .workspace_visibility_plot {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    align-content: space-around;
+    align-content: flex-start;
+}
+
+.workspace_visibility_plot > div {
+    margin-top: 10px;
+}
+
+.workspace_visibility_plot > div.visibility_plot_pattern_show {
+    margin-top: 60px;
+}
+
+.visibility_plot_pattern_show,
+.visibility_plot_user_show {
+    width: 80%;
+    cursor: default;
+}
+
+.visibility_plot_pattern_show > div,
+.visibility_plot_user_show > div {
+    display: inline-block;
+    color: #000000;
 }
 
 .axis path,
@@ -307,31 +342,49 @@
 }
 
 .workspace_screen .screen_pattern,
-.workspace_screen .screen_user,
-.workspace_screen .screen_comparison {
-    width: 90%;
-    height: 72%;
+.workspace_screen .screen_user{
+    width: 240px;
+    height: 132px;
     margin-top: 0;
 }
 
-.screen_pattern_show,
-.intensity_plot_pattern_show,
-.visibility_plot_pattern_show {
+.screen_pattern_show {
     color: #eea236;
-    margin-right: 10px;
+    min-width: 80px;
 }
 
-.screen_user_show,
-.intensity_plot_user_show,
+.intensity_plot_pattern_show {
+    color: #eea236;
+    min-width: 110px;
+}
+
+.visibility_plot_pattern_show {
+    color: #eea236;
+    display: block;
+}
+
+.screen_user_show {
+    color: #000080;
+    min-width: 80px;
+}
+
+.intensity_plot_user_show {
+    color: #000080;
+    min-width: 110px;
+}
+
 .visibility_plot_user_show {
     color: #000080;
-    margin-right: 10px;
+    display: block;
 }
 
 .screen_comparison_show,
-.intensity_comparison_show,
-.visibility_comparison_show {
+.intensity_comparison_show {
     color: #569F1D;
+}
+
+.intensity_comparison_show {
+    min-width: 110px;
 }
 
 .plot_show.not_active:hover {
@@ -479,7 +532,6 @@
     }
 }
 
-.workspace_intensity_plot i:first-child,
-.workspace_visibility_plot i:first-child {
+.workspace_intensity_plot i:first-child {
     padding-left: 5px;
 }
