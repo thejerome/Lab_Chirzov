@@ -22,7 +22,7 @@ public class ToolModel {
     public static final BigDecimal TEN_POW_MINUS_THREE = new BigDecimal("0.001");
     public static final BigDecimal bdPI = new BigDecimal(PI);
     private static BigDecimal halfWidth = bd("0.03");
-    private static BigDecimal xStep = bd("0.001");
+    private static BigDecimal xStep = bd("0.00025");
     private static final BigDecimal i0 = ONE;
 
     public static PlotData buildPlot(ToolState state){
