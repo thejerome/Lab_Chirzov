@@ -158,7 +158,7 @@
 .workspace_light_source label input,
 .workspace_slits label input,
 .workspace_demonstration label input {
-    width: 20%;
+    width: 24%;
 }
 
 .workspace_light_source label input:first-child,
@@ -437,7 +437,7 @@
 }
 
 .block_field_title {
-    margin: 0 120px 30px 120px;
+    margin: 0 140px 30px 140px;
     font-size: 24px;
     font-weight: bold;
 }

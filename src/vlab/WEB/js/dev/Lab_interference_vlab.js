@@ -46,20 +46,20 @@ function init_lab() {
         '<div class="demonstration_part part_light"></div><div class="demonstration_part part_slits"></div>' +
         '<div class="demonstration_part part_screen"></div><div class="demonstration_part part_base"></div>' +
         '<label for="control_light_length"> &lambda;: <input class="control_light_length" ' +
-        'id="control_light_length" type="range"/><input class="light_length_value" type="text"/> нм</label>' +
+        'id="control_light_length" type="range"/><input class="light_length_value" type="number"> нм</label>' +
         '<label for="control_light_slits"> <i>D</i>: <input class="control_light_slits" ' +
-        'id="control_light_slits" type="range"/><input class="light_slits_value" type="text"/> м</label>' +
+        'id="control_light_slits" type="range"/><input class="light_slits_value" type="number"/> м</label>' +
         '<label for="control_slits_screen"> <i>d</i>: <input class="control_slits_screen" ' +
-        'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="text"/> м</label></div>' +
+        'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="number"/> м</label></div>' +
         '<div class="workspace_light_source"><div class="light_source_screen"><div class="light_source_slit"></div></div><label ' +
         'for="control_light_width"> &alpha;: <input class="control_light_width" id="control_light_width" type="range"/>' +
-        '<input class="light_width_value" type="text"/> мм</label>' +
+        '<input class="light_width_value" type="number"/> мм</label>' +
         '</div><div class="workspace_slits">' +
         '<input class="check_left_slit check_slit btn small_btn" slit_id="1" type="checkbox"/><div class="slits_screen">' +
         '<div class="slit slit_1"></div><div class="slit slit_2">' +
         '</div></div><input class="check_right_slit check_slit btn small_btn" slit_id="2" type="checkbox"/>' +
         '<label for="control_slits_width"> <i>A</i>: <input class="control_slits_width" ' +
-        'id="control_slits_width" type="range"/><input class="slits_width_value" type="text"/> мм</label>' +
+        'id="control_slits_width" type="range"/><input class="slits_width_value" type="number"/> мм</label>' +
         '</div><div class="workspace_screen">' +
         '<div class="screen_pattern plot_pattern screen_comparison_on screen_user_on"><svg width="240" height="132"></svg></div>' +
         '<div class="screen_user plot_user screen_comparison_on screen_pattern_on"><svg width="240" height="132"></svg></div>' +
@@ -117,6 +117,9 @@ function init_lab() {
         $(id_range).attr("min", range[0]);
         $(id_range).attr("max", range[1]);
         $(id_range).attr("step", step);
+        $(id_input).attr("min", range[0]);
+        $(id_input).attr("max", range[1]);
+        $(id_input).attr("step", step);
         $(id_range).val(value);
         $(id_input).val(value);
     }
@@ -354,7 +357,6 @@ function init_lab() {
         var plot = d3.select(picture_selector),
             WIDTH = width,
             HEIGHT = height;
-        console.log(WIDTH/data.length);
         plot.selectAll("rect")
             .data(data)
             .enter()
