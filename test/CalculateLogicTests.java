@@ -127,6 +127,28 @@ public class CalculateLogicTests {
         System.out.println(calculatingResult.getCode());
     }
 
+    @Test
+    public void testSmallPeriodDataRealWorldCalculateProcesses() throws  Exception{
+        GenerateProcessor generateProcessor = new GenerateProcessorImpl();
+        GeneratingResult generatingResult = generateProcessor.generate("no matter");
+
+        //create ObjectMapper instance
+        ObjectMapper objectMapper = new ObjectMapper();
+        ToolState toolState = objectMapper.readValue(
+                "{\"light_slits_distance\":0.5,\"light_screen_distance\":1.5,\"light_width\":0.05,\"light_length\":500,\"left_slit_closed\":false,\"right_slit_closed\":false,\"between_slits_width\":0.09}",
+                ToolState.class);
+
+
+        CalculateProcessor calculateProcessor = new CalculateProcessorImpl();
+
+        CalculatingResult calculatingResult = calculateProcessor.calculate("", escapeParam(objectMapper.writeValueAsString(toolState)), generatingResult);
+
+        System.out.println(calculatingResult.getCode());
+
+        assertNotNull(toolState);
+        assertNotNull(calculatingResult);
+    }
+
 
 @Test
     public void testCalculateProcesses() throws  Exception{

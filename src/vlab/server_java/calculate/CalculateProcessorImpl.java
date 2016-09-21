@@ -36,7 +36,8 @@ public class CalculateProcessorImpl implements CalculateProcessor {
 
             return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString(ToolModel.buildPlot(toolState))));
         } catch (Exception e) {
-            return new CalculatingResult("error", e.toString());
+            e.printStackTrace();
+            return new CalculatingResult("error", e.getMessage());
         }
     }
 }
