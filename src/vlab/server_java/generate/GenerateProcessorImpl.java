@@ -45,6 +45,8 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             double v = getRandomDoubleBetween(mass * 2 + 1, mass * 5);
 */
 
+            BigDecimal odd_light_slits_distance_steps = BigDecimal.valueOf(getRandomIntegerBetween(1, 90));
+
 
             BigDecimal light_slits_distance = bd("0.5");
             BigDecimal light_screen_distance = bd("0.7");
