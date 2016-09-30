@@ -127,7 +127,7 @@ public class Util {
     }
 
     public static BigDecimal bd(double d) {
-        return new BigDecimal(d);
+        return BigDecimal.valueOf(d);
     }
 
 }

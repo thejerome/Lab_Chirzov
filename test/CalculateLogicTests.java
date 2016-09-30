@@ -122,7 +122,7 @@ public class CalculateLogicTests {
 
         CalculateProcessor calculateProcessor = new CalculateProcessorImpl();
 
-        CalculatingResult calculatingResult = calculateProcessor.calculate("", escapeParam(objectMapper.writeValueAsString(toolState)), generatingResult);
+        CalculatingResult calculatingResult = calculateProcessor.calculate("", escapeParam(escapeParam(objectMapper.writeValueAsString(toolState))), generatingResult);
 
         System.out.println(calculatingResult.getCode());
     }

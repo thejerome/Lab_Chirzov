@@ -45,7 +45,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             double v = getRandomDoubleBetween(mass * 2 + 1, mass * 5);
 */
 
-            BigDecimal odd_light_slits_distance_steps = BigDecimal.valueOf(getRandomIntegerBetween(1, 90));
+            BigDecimal mu =  BigDecimal.valueOf(getRandomIntegerBetween(1, 90));
 
 
             BigDecimal light_slits_distance = bd("0.5");
@@ -53,7 +53,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             BigDecimal[] light_screen_range = new BigDecimal[]{bd("0.01"), bd("2")};
             BigDecimal light_screen_step = bd("0.01");
             BigDecimal light_width = bd("0.05");
-            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("1")};
+            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("10")};
             BigDecimal light_width_step = bd("0.01");
             BigDecimal light_length = bd("721");
             BigDecimal[] light_length_range = new BigDecimal[]{bd("380"), bd("780")};

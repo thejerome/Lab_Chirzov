@@ -34,7 +34,7 @@ public class CalculateProcessorImpl implements CalculateProcessor {
             ToolState toolState = objectMapper.readValue(instructions, ToolState.class);
             Variant varCode = objectMapper.readValue(generatingResult.getCode(), Variant.class);
 
-            return new CalculatingResult("ok", escapeParam(objectMapper.writeValueAsString(ToolModel.buildPlot(toolState))));
+            return new CalculatingResult("ok", escapeParam(escapeParam(objectMapper.writeValueAsString(ToolModel.buildPlot(toolState)))));
         } catch (Exception e) {
             e.printStackTrace();
             return new CalculatingResult("error", e.getMessage());
