@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LaboratoryFrames xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://de.ifmo.ru/--schema/LaboratoryFrames.xsd" >
+	<FrameIndex Scheme="7511" FrameID="1">
+		<LaboratoryFrame Name="Интерференция." TimeLimit="30" TimeScale="Minute" ShowTime="Yes" Language="ru">
+			<ToolIndex Scheme="7511" ToolID="1"/>
+			<Data contentType="xhtml">Требуется подобрать параметры, чтобы повторить картину интерференции и получить значение видимости, совпадающее с образцовым.</Data>
+			<LaboratoryTestsGroups LaboratoryTestsGroupsID="1" LimitOnCollection="1800" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
+				<LaboratoryTestsGroup LaboratoryTestsGroupID="1" Number="1" LimitOnTest="1800" TimeScale="Second" Weight="1" >
+					<LaboratoryTest TestID="1" LimitOnTest="1800" TimeScale="Second" Weight="1" >
+						<LaboratoryTestInput>
+							<!-- nothing -->
+						</LaboratoryTestInput>						
+						<LaboratoryTestOutput>
+							<!-- nothing -->
+						</LaboratoryTestOutput>
+					</LaboratoryTest>
+				</LaboratoryTestsGroup>
+			</LaboratoryTestsGroups>
+			<Generator>
+				<ByDefault>
+					<Text>
+						<!-- Информация для отображения пользователю, если север ВЛ недоступен -->
+					</Text>
+					<Code>
+						<!-- Информация для лабораторной установки, если север ВЛ недоступен -->
+					</Code>
+					<Instructions>
+						<!-- Инструкции по проверки решения, если сервер ВЛ недоступен -->
+					</Instructions>
+				</ByDefault>
+				<Algorithm>
+     					<!-- Инструкции для генерирования -->
+				</Algorithm>
+			</Generator>
+		</LaboratoryFrame>
+	</FrameIndex>
+</LaboratoryFrames>

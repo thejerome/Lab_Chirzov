@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Laboratories xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://de.ifmo.ru/--schema/Laboratories.xsd" >
+	<ScriptIndex Scheme="7511" ScriptID="1" >
+		<Laboratory Name="Интерференция." TimeLimit="30" TimeScale="Minute" Mode="Learning" ShowTime="Yes" AllowedCalculator="Yes" Language="ru" >
+			<LaboratoryFramesArray >
+				<FrameIndex Scheme="7511" FrameID="1" >
+					<LaboratoryFramesArrayItem TimeLimit="1" TimeScale="Hour" ShowTime="Yes" AllowedCalculator="Yes" ></LaboratoryFramesArrayItem>
+				</FrameIndex>
+			</LaboratoryFramesArray>
+			<LaboratoryRules Time="-1" >
+				<LaboratoryRule Percent="0" Result="Неуд" Message="" ></LaboratoryRule>
+				<LaboratoryRule Percent="60" Result="Отл" Message="" ></LaboratoryRule>
+			</LaboratoryRules>
+		</Laboratory>
+	</ScriptIndex>
+</Laboratories>

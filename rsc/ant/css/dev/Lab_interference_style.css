@@ -1,0 +1,537 @@
+.vlab_setting {
+    width: 800px;
+    height: 650px;
+    border: 2px solid #3d4652;
+    margin: 10px;
+    border-radius: 5px;
+    position: relative;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: auto;
+}
+
+.block_title {
+    width: 100%;
+    background-color: #eeeeee;
+    padding: 0 15px;
+    font-size: 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.block_title input {
+    float: right;
+}
+
+.block_title .vlab_name {
+    display: inline-block;
+}
+
+.block_workspace {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+    overflow: auto;
+    height: 590px;
+}
+
+.block_workspace > div {
+    box-sizing: border-box;
+    overflow: auto;
+    min-width: 200px;
+    min-height: 100px;
+}
+
+.block_workspace .workspace_demonstration {
+    width: 100%;
+    border-bottom: 1px solid #3d4652;
+    border-top: 1px solid #3d4652;
+    height: 30%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.workspace_demonstration label {
+    margin-bottom: 8px;
+}
+
+.workspace_demonstration .demonstration_part {
+    position: absolute;
+    width: 4px;
+    height: 55%;
+    top: 10%;
+    z-index: 2;
+    background-color: #b8b9bc;
+}
+
+.workspace_demonstration .demonstration_part.part_screen {
+    background-color: #000000;
+}
+
+.workspace_demonstration .demonstration_light {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    z-index: 1;
+}
+
+.demonstration_part.part_base {
+    width: 80%;
+    height: 10%;
+    background-color: #eea236;
+    top: 65%;
+    left: 10%;
+    z-index: 1;
+}
+
+.demonstration_part.part_light {
+    left: 28%;
+}
+
+.block_workspace .workspace_light_source {
+    width: 33.3%;
+    border-right: 1px solid #3d4652;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.workspace_light_source .light_source_screen,
+.workspace_slits .slits_screen,
+.workspace_screen .screen_pattern,
+.workspace_screen .screen_comparison,
+.workspace_screen .screen_user {
+    position: relative;
+    width: 70%;
+    height: 60%;
+    background-color: #b8b9bc;
+}
+
+.workspace_screen .screen_pattern,
+.workspace_screen .screen_user,
+.workspace_screen .screen_comparison {
+    background-color: #000000;
+}
+
+.slits_screen .slit {
+    position: absolute;
+    width: 1px;
+    height: 88%;
+    background-color: #fff;
+}
+
+.slit.slit_1 {
+    left: 40%;
+}
+
+.slit.slit_2 {
+    right: 40%;
+}
+
+.workspace_light_source > input {
+    width: 50%;
+}
+
+.workspace_light_source label,
+.workspace_slits label {
+    width: 95%;
+}
+
+.workspace_demonstration label {
+    width: 25%;
+}
+
+.workspace_light_source label input,
+.workspace_slits label input,
+.workspace_demonstration label input {
+    width: 24%;
+}
+
+.workspace_light_source label input:first-child,
+.workspace_slits label input:nth-child(2),
+.workspace_demonstration label input.control_light_slits,
+.workspace_demonstration label input.control_slits_screen,
+.workspace_demonstration label input.control_light_length {
+    width: 54%;
+    vertical-align: middle;
+}
+
+.light_source_screen .light_source_slit {
+    position: absolute;
+    width: 20%;
+    height: 88%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+}
+
+.block_workspace .workspace_slits {
+    width: 33.3%;
+    border-right: 1px solid #3d4652;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.block_workspace .workspace_screen {
+    width: 33.3%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.block_workspace .workspace_intensity_plot {
+    width: 70%;
+    border-top: 1px solid #3d4652;
+    height: 40%;
+}
+
+.block_workspace .workspace_visibility_plot {
+    width: 30%;
+    border-top: 1px solid #3d4652;
+    height: 40%;
+}
+
+.block_help {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 3;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: 590px;
+    border-top: 1px solid #3d4652;
+    background-color: #ffffff;
+    padding: 15px;
+    font-size: 14px;
+}
+
+.btn {
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid #eea236;
+    outline: none;
+    border-radius: 13px;
+    min-width: 90px;
+    color: #fff;
+    height: 39px;
+    background-image: linear-gradient(to bottom, #FBC579, #fbb450);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.btn:hover {
+    background: #eea236;
+}
+
+.btn.btn_help {
+    font-size: 14px;
+    margin: 0;
+}
+
+.btn.not_active {
+    background-image: linear-gradient(to bottom, #FCDDB0, #FCDDB0);
+    cursor: auto;
+    border-color: #FCD192;
+}
+
+.btn.small_btn {
+    padding: 0;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.workspace_screen .small_btn:last-child {
+    margin-right: 0;
+}
+
+.workspace_intensity_plot .intensity_plot_user,
+.workspace_screen .screen_user,
+.workspace_intensity_plot .intensity_comparison,
+.workspace_screen .screen_comparison {
+    display: none;
+}
+
+.slits_screen,
+.light_source_screen {
+    padding: 3% 0;
+}
+
+.workspace_intensity_plot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.workspace_visibility_plot {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.workspace_visibility_plot > div {
+    margin-top: 10px;
+}
+
+.workspace_visibility_plot > div.visibility_plot_pattern_show {
+    margin-top: 60px;
+}
+
+.visibility_plot_pattern_show,
+.visibility_plot_user_show {
+    width: 80%;
+    cursor: default;
+}
+
+.visibility_plot_pattern_show > div,
+.visibility_plot_user_show > div {
+    display: inline-block;
+    color: #000000;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #777777;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-size: 12px;
+}
+
+.tick {
+    stroke-dasharray: 1, 2;
+}
+
+.workspace_screen .screen_pattern,
+.workspace_screen .screen_user{
+    width: 240px;
+    height: 132px;
+    margin-top: 0;
+}
+
+.screen_pattern_show {
+    color: #eea236;
+    min-width: 80px;
+}
+
+.intensity_plot_pattern_show {
+    color: #eea236;
+    min-width: 110px;
+}
+
+.visibility_plot_pattern_show {
+    color: #eea236;
+    display: block;
+}
+
+.screen_user_show {
+    color: #000080;
+    min-width: 80px;
+}
+
+.intensity_plot_user_show {
+    color: #000080;
+    min-width: 110px;
+}
+
+.visibility_plot_user_show {
+    color: #000080;
+    display: block;
+}
+
+.screen_comparison_show,
+.intensity_comparison_show {
+    color: #569F1D;
+}
+
+.intensity_comparison_show {
+    min-width: 110px;
+}
+
+.plot_show.not_active:hover {
+    cursor: default;
+}
+
+.plot_show:hover {
+    cursor: pointer;
+}
+
+.btn.btn_play {
+    position: absolute;
+    width: 60px;
+    padding: 10px;
+    min-width: 40px;
+    height: 60px;
+    top: 20%;
+    right: 1%;
+    border-radius: 20px;
+}
+
+.btn.btn_play img {
+    width: 100%;
+    height: 100%;
+}
+
+.block_field {
+    display: none;
+}
+
+.waiting_loading {
+    display: none;
+}
+
+.block_field.active_waiting {
+    width: 100%;
+    height: 590px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: auto;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.block_field_title {
+    margin: 0 140px 30px 140px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.block_field.active_waiting .waiting_loading {
+    display: block;
+    padding: 0;
+    width: 70px;
+    height: 70px;
+    z-index: 11;
+    background-size: contain;
+    background-image: url(img/Lab_interference_hourglass.png);
+    background-repeat: no-repeat;
+    -webkit-animation-name: rotation;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotation;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -o-animation-name: rotation;
+    -o-animation-duration: 2s;
+    -o-animation-iteration-count: infinite;
+    -o-animation-timing-function: linear;
+    animation-name: rotation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@-moz-keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    65% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+@-o-keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    65% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    65% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(720deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+.workspace_intensity_plot i:first-child {
+    padding-left: 5px;
+}

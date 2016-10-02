@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<LaboratoryTools xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://de.ifmo.ru/--schema/LaboratoryTools.xsd" >
+    <ToolIndex Scheme="7511" ToolID="1" >
+        <LaboratoryTool Name="Физическая оптика. Интерференция." Code="JS" Width="1" Height="1" Archive="" Language="ru" >
+            <Attach Src="css/dev/Lab_interference_style.css" ></Attach>
+            <Attach Src="js/lib/Lab_interference_d3.min.js" ></Attach>
+            <Attach Src="js/lib/Lab_interference_jquery-2.2.3.min.js" ></Attach>
+            <Attach Src="js/dev/Lab_interference_vlab_1251.js" ></Attach>
+            <Attach Src="img/Lab_interference_hourglass.png" ></Attach>
+            <Attach Src="img/Lab_interference_play.png" ></Attach>
+        </LaboratoryTool>
+    </ToolIndex>
+</LaboratoryTools>
