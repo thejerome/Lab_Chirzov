@@ -540,22 +540,7 @@ function init_lab() {
         parse_light_screen($(".control_slits_screen").val(), laboratory_variant.light_screen_range);
     }
 
-    function parse_variant(str, default_object) {
-        var parsed_object;
-        if (typeof str === 'string' && str !== "") {
-            try {
-                parsed_object = str.replace(/&quot;/g, "\"").replace(/&minus;/g, "-").replace(/&#0045;/g, "-");
-                parsed_object = JSON.parse(parsed_object);
-            } catch (e) {
-                parsed_object = default_object;
-            }
-        } else {
-            parsed_object = default_object;
-        }
-        return parsed_object;
-    }
-
-    function parse_calculate_results(str, default_object) {
+    function parse_result(str, default_object) {
         var parsed_object;
         if (typeof str === 'string' && str !== "") {
             try {
@@ -563,10 +548,18 @@ function init_lab() {
                     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-");
                 parsed_object = JSON.parse(parsed_object);
             } catch (e) {
-                parsed_object = default_object;
+                if (default_object){
+                    parsed_object = default_object;
+                } else {
+                    parsed_object = false;
+                }
             }
         } else {
-            parsed_object = default_object;
+            if (default_object){
+                parsed_object = default_object;
+            } else {
+                parsed_object = false;
+            }
         }
         return parsed_object;
     }
@@ -574,7 +567,7 @@ function init_lab() {
     function get_variant() {
         var variant;
         if ($("#preGeneratedCode") !== null) {
-            variant = parse_variant($("#preGeneratedCode").val(), default_variant);
+            variant = parse_result($("#preGeneratedCode").val(), default_variant);
         } else {
             variant = default_variant;
         }
@@ -598,12 +591,35 @@ function init_lab() {
         draw_light(light_color_hex, light_edge);
     }
 
+    function draw_previous_solution(previous_solution){
+        $(".control_light_length").val(previous_solution.light_length);
+        change_length_range();
+        $(".control_light_width").val(previous_solution.light_width);
+        change_width_range();
+        $(".control_slits_width").val(previous_solution.between_slits_width);
+        change_slits_range();
+        $(".control_light_slits").val(previous_solution.light_slits_distance);
+        change_light_slits_range();
+        $(".control_slits_screen").val(previous_solution.light_screen_distance);
+        change_slits_screen_range();
+        if (previous_solution.left_slit_closed){
+            change_slits_status($(".check_left_slit"));
+        }
+        if (previous_solution.right_slit_closed){
+            change_slits_status($(".check_right_slit"));
+        }
+    }
+
     return {
         init: function () {
             laboratory_variant = get_variant();
             container = $("#jsLab")[0];
             container.innerHTML = window;
             fill_setting(laboratory_variant);
+            if ($("#previousSolution") !== null && $("#previousSolution").length > 0 && parse_result($("#previousSolution").val())) {
+                var previous_solution = parse_result($("#previousSolution").val());
+                draw_previous_solution(previous_solution);
+            }
             $(".btn_help").click(function () {
                 show_help();
             });
@@ -677,7 +693,7 @@ function init_lab() {
             })
         },
         calculateHandler: function () {
-            data_plot_user = parse_calculate_results(arguments[0], default_plot_data);
+            data_plot_user = parse_result(arguments[0], default_plot_data);
             init_plot(data_plot_user.data_plot, ".intensity_plot_user svg", 1, 550, 150, 40, 30, 20, false);
             init_plot(data_plot_user.data_plot, ".intensity_comparison svg", 1, 550, 150, 40, 30, 20, true, laboratory_variant.data_plot_pattern);
             init_interference_picture(data_plot_user.data_plot, ".screen_user svg", 240, 132, light_color_hex);

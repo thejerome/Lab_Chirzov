@@ -13,6 +13,7 @@
     justify-content: space-between;
     align-items: flex-start;
     overflow: auto;
+    font-size: 14px;
 }
 
 .block_title {
@@ -152,7 +153,7 @@
 }
 
 .workspace_demonstration label {
-    width: 25%;
+    width: 30%;
 }
 
 .workspace_light_source label input,
