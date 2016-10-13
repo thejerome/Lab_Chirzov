@@ -38,7 +38,7 @@ function init_lab() {
         ]
     };
     var window = '<div class="vlab_setting"><div class="block_title">' +
-        '<div class="vlab_name">Виртуальная лаборатория «Интерференция»' +
+        '<div class="vlab_name">Виртуальная лаборатория «Опыт Юнга»' +
         '</div><input class="btn_help btn" type="button" value="Справка"/></div>' +
         '<div class="block_field"><div class="block_field_title">Обновление интерференционной картины</div><div class="waiting_loading"></div>' +
         '</div><div class="block_workspace"><div class="workspace_demonstration"><button class="btn btn_play" type="button">' +
@@ -49,7 +49,7 @@ function init_lab() {
         'id="control_light_length" type="range"/><input class="light_length_value" type="number"> нм</label>' +
         '<label for="control_light_slits"> <i>D</i>: <input class="control_light_slits" ' +
         'id="control_light_slits" type="range"/><input class="light_slits_value" type="number"/> м</label>' +
-        '<label for="control_slits_screen"> <i>d</i>: <input class="control_slits_screen" ' +
+        '<label for="control_slits_screen"> <i>D+d</i>: <input class="control_slits_screen" ' +
         'id="control_slits_screen" type="range"/><input class="slits_screen_value" type="number"/> м</label></div>' +
         '<div class="workspace_light_source"><div class="light_source_screen"><div class="light_source_slit"></div></div><label ' +
         'for="control_light_width"> &alpha;: <input class="control_light_width" id="control_light_width" type="range"/>' +
@@ -545,7 +545,8 @@ function init_lab() {
         if (typeof str === 'string' && str !== "") {
             try {
                 parsed_object = str.replace(/<br\/>/g, "\r\n").replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;br\/&gt;/g, "\r\n")
-                    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-");
+                    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-")
+                    .replace(/!/g, "\"").replace(/$/g, "-");
                 parsed_object = JSON.parse(parsed_object);
             } catch (e) {
                 if (default_object){
