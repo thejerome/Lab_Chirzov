@@ -40,9 +40,10 @@ function init_lab() {
     var window = '<div class="vlab_setting"><div class="block_title">' +
         '<div class="vlab_name">Виртуальная лаборатория «Опыт Юнга»' +
         '</div><input class="btn_help btn" type="button" value="Справка"/></div>' +
-        '<div class="block_field"><div class="block_field_title">Обновление интерференционной картины</div><div class="waiting_loading"></div>' +
+        '<div class="block_field"><div class="block_field_title">Обновление интерференционной картины</div><div class="waiting_loading">' +
+        '<img width="100%" height="100%" src="img/Lab_interference_hourglass.png" /></div>' +
         '</div><div class="block_workspace"><div class="workspace_demonstration"><button class="btn btn_play" type="button">' +
-        '<img src="img/Lab_interference_play.png"></button><canvas class="demonstration_light" width="640" height="97"></canvas>' +
+        '<img src="img/Lab_interference_play.png" /></button><canvas class="demonstration_light" width="640" height="97"></canvas>' +
         '<div class="demonstration_part part_light"></div><div class="demonstration_part part_slits"></div>' +
         '<div class="demonstration_part part_screen"></div><div class="demonstration_part part_base"></div>' +
         '<label for="control_light_length"> &lambda;: <input class="control_light_length" ' +
@@ -238,7 +239,7 @@ function init_lab() {
     }
 
     function parse_lightwave_width(width_in_m, range) {
-        var width_in_percent = (width_in_m / range[1]) * 50;
+        var width_in_percent = (width_in_m / range[1]) * 70 + 1;
         $(".light_source_slit").css("width", width_in_percent + "%");
     }
 
