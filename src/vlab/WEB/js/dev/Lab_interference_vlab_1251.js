@@ -546,7 +546,8 @@ function init_lab() {
             try {
                 parsed_object = str.replace(/<br\/>/g, "\r\n").replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;br\/&gt;/g, "\r\n")
                     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&minus;/g, "-").replace(/&apos;/g, "\'").replace(/&#0045;/g, "-")
-                    .replace(/!/g, "\"").replace(/$/g, "-");
+                    .replace(/!/g, "\"").replace(/\$/g, "-");
+                console.log(parsed_object);
                 parsed_object = JSON.parse(parsed_object);
             } catch (e) {
                 if (default_object){
