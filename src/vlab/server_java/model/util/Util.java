@@ -111,7 +111,7 @@ public class Util {
     }
 
     public static BigDecimal shrink(BigDecimal v){
-        return v.setScale(3, BigDecimal.ROUND_HALF_UP);
+        return v.setScale(6, BigDecimal.ROUND_HALF_UP);
     }
 
     public static BigDecimal[] shrink(BigDecimal[] v){

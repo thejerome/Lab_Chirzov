@@ -53,7 +53,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             BigDecimal[] light_screen_range = new BigDecimal[]{bd("0.01"), bd("2")};
             BigDecimal light_screen_step = bd("0.01");
             BigDecimal light_width = bd("0.05");
-            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("3")};
+            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("10")};
             BigDecimal light_width_step = bd("0.01");
             BigDecimal light_length = bd("721");
             BigDecimal[] light_length_range = new BigDecimal[]{bd("380"), bd("780")};
@@ -61,7 +61,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             boolean right_slit_closed = false;
             boolean left_slit_closed = false;
             BigDecimal between_slits_width = bd("0.01");
-            BigDecimal[] between_slits_range = new BigDecimal[]{bd("0.01"), bd("10")};
+            BigDecimal[] between_slits_range = new BigDecimal[]{bd("0.01"), bd("3")};
             BigDecimal between_slits_step = bd("0.01");
             PlotData plotData = ToolModel.buildPlot(
                     new ToolState(
