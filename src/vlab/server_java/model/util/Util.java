@@ -19,17 +19,22 @@ public class Util {
     public static String escapeParam( String param ){
         String res = param.replaceAll( "&", "&amp;" );
 
-        res = res.replaceAll( "<", "&#060;" );
-        res = res.replaceAll(">", "&#062;");
+        res = res.replace( "<", "&#060;" );
+        res = res.replace(">", "&#062;");
 
-        res = res.replaceAll( "\r\n", "<br/>" );
-	    res = res.replaceAll( "\r", "<br/>" );
-	    res = res.replaceAll( "\n", "<br/>" );
+        res = res.replace( "\r\n", "<br/>" );
+	    res = res.replace( "\r", "<br/>" );
+	    res = res.replace( "\n", "<br/>" );
 
-        res = res.replaceAll( "<", "&lt;" );
-        res = res.replaceAll(">", "&gt;");
-        res = res.replaceAll("-", "&#0045;");
-        res = res.replaceAll( "\"", "&quot;" );
+        res = res.replace( "<", "&lt;" );
+        res = res.replace(">", "&gt;");
+
+        res = res.replace("-", "$");
+        res = res.replace( "\"", "!" );
+
+//        res = res.replaceAll("-", "&#0045;");
+//        res = res.replaceAll( "\"", "&quot;" );
+
         res = res.replaceAll( "\'", "&apos;" );
 
         res = res.replace( "\\", "&#92;" );
@@ -52,13 +57,18 @@ public class Util {
 	 * @return разэкранированная строка
 	 */
     public static String unescapeParam( String param ){
-        String res = param.replaceAll( "&amp;", "&" );
-        res = res.replaceAll( "&quot;", "\"" );
-        res = res.replaceAll( "&lt;br/&gt;", "\r\n");
-        res = res.replaceAll( "&lt;", "<" );
-        res = res.replaceAll( "&gt;", ">" );
-        res = res.replaceAll( "&#0045;", "-" );
-        res = res.replaceAll( "&apos;", "\'" );
+        String res = param.replace( "&amp;", "&" );
+        res = res.replace( "&quot;", "\"" );
+        res = res.replace( "&lt;br/&gt;", "\r\n");
+        res = res.replace( "&lt;", "<" );
+        res = res.replace( "&gt;", ">" );
+        res = res.replace( "&#0045;", "-" );
+
+        res = res.replace("$", "-");
+        res = res.replace("!", "\"" );
+
+
+        res = res.replace( "&apos;", "\'" );
 
         res = res.replace("&minus;", "-");
         res = res.replace( "&#92;", "\\" );
@@ -101,7 +111,7 @@ public class Util {
     }
 
     public static BigDecimal shrink(BigDecimal v){
-        return v.setScale(6, BigDecimal.ROUND_HALF_UP);
+        return v.setScale(3, BigDecimal.ROUND_HALF_UP);
     }
 
     public static BigDecimal[] shrink(BigDecimal[] v){

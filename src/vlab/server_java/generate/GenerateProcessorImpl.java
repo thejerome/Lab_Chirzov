@@ -53,7 +53,7 @@ public class GenerateProcessorImpl implements GenerateProcessor {
             BigDecimal[] light_screen_range = new BigDecimal[]{bd("0.01"), bd("2")};
             BigDecimal light_screen_step = bd("0.01");
             BigDecimal light_width = bd("0.05");
-            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("10")};
+            BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("3")};
             BigDecimal light_width_step = bd("0.01");
             BigDecimal light_length = bd("721");
             BigDecimal[] light_length_range = new BigDecimal[]{bd("380"), bd("780")};
