@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Класс, реализующий экранирование/разэкранирование специальных символов
  * при передаче состояния ВЛР на сторону сервера и обратно.
  */
 public class Util {
+
+
+    private static Random random = new Random(System.nanoTime());
 
 	/**
 	 * метод для экранирования строки
@@ -138,6 +142,19 @@ public class Util {
 
     public static BigDecimal bd(double d) {
         return BigDecimal.valueOf(d);
+    }
+
+
+    public static int getRandomIntegerBetween(int a, int b) {
+        return (a + random.nextInt(b - a + 1));
+    }
+
+    public static double getRandomDoubleBetween(int a, int b) {
+        return (a + random.nextDouble() * (b-a));
+    }
+
+    public static boolean getRandomBoolean(){
+        return random.nextBoolean();
     }
 
 }
