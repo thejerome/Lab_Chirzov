@@ -3,13 +3,26 @@
 	<FrameIndex Scheme="1" FrameID="1">
 		<LaboratoryFrame Name="Задание 1" TimeLimit="30" TimeScale="Minute" ShowTime="Yes" Language="ru">
 			<ToolIndex Scheme="1" ToolID="1"/>
-			<Data contentType="xhtml">test</Data>
+			<Data contentType="xhtml">
+				1. Приведите виртуальную оптическую систему в исходное состояние,
+				соответствующее начальным значениям параметров: λ = 500 нм, D = 0.50 м, D+d
+				= 1.00 м, а = 0.01 мм, А = 0.01 мм.
+				2. Увеличьте длину волны света на указанное в варианте значение, а щели
+				раздвиньте в 3 раза.
+				3. Запустите эксперимент и обратите внимание на изменения, возникшие в интерференционной картине.
+				4. Рассчитайте новое положение экрана для наблюдения интерференции при
+				котором х-распределение интенсивности света в интерференционной картине
+				окажется точно таким же, как в первоначально поставленном эксперименте
+				при длине волны λ = 500 нм и расстоянии между щелями А = 0.01 мм.
+				5. Проверьте правильность Ваших расчетов на компьютерном эксперименте.
+
+			</Data>
 			<LaboratoryTestsGroups LaboratoryTestsGroupsID="1" LimitOnCollection="1800" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
 				<LaboratoryTestsGroup LaboratoryTestsGroupID="1" Number="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
 					<LaboratoryTest TestID="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
 						<LaboratoryTestInput>
-							<!-- some -->
-						</LaboratoryTestInput>						
+							<!-- explore -->
+						</LaboratoryTestInput>
 						<LaboratoryTestOutput>
 							<!-- somw -->
 						</LaboratoryTestOutput>
@@ -29,7 +42,63 @@
 					</Instructions>
 				</ByDefault>
 				<Algorithm>
-     					<!-- Инструкции для генерирования -->
+     					<!-- explore -->
+				</Algorithm>
+			</Generator>
+		</LaboratoryFrame>
+	</FrameIndex>
+	<FrameIndex Scheme="1" FrameID="2">
+		<LaboratoryFrame Name="Задание 2" TimeLimit="30" TimeScale="Minute" ShowTime="Yes" Language="ru">
+			<ToolIndex Scheme="1" ToolID="1"/>
+			<Data contentType="xhtml">
+				1) Внимательно изучите возникшую интерференционную картину…
+				2) Измените ширину светящейся полоски на δа = +- 0.5 мм (пользователи получают
+				значения, выбираемые случайным образом из интервала).
+				3) Измените длину волны излучения источника света на δ λ = +- 100 нм
+				(пользователи получают значения, выбираемые случайным образом из
+				интервала).
+				4) Рассмотрите полученную интерференционную картину.
+				5) Проведите необходимый расчет и подберите такие значения параметров D ,
+				D+d и А, при которых:
+				1. Восстановится исходное значение видности картины
+				2. Восстановится исходное значение расстояния между
+				интерференционными полосами
+				3. Минимумы и максимумы интерференционных полос поменяются
+				местами (в точках минимумов интенсивности возникнут максимумы и
+				наоборот).
+				Подсказка: Решение подобрать ответ путем «рандомного» перемещения движков
+				интерактивной модели вряд ли окажется самым рациональным. Гораздо
+				эффективнее попытаться найти аналитическое решение поставленной задачи и
+				реализовать эго в виртуальном эксперименте.
+				Желаем успеха!
+
+			</Data>
+			<LaboratoryTestsGroups LaboratoryTestsGroupsID="1" LimitOnCollection="1800" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
+				<LaboratoryTestsGroup LaboratoryTestsGroupID="1" Number="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
+					<LaboratoryTest TestID="1" LimitOnTest="1800" TimeScale="Second" URL="rlcp://dlc:dlc@127.0.0.1:14111" Weight="1" >
+						<LaboratoryTestInput>
+							<!-- oscillation -->
+						</LaboratoryTestInput>
+						<LaboratoryTestOutput>
+							<!-- somw -->
+						</LaboratoryTestOutput>
+					</LaboratoryTest>
+				</LaboratoryTestsGroup>
+			</LaboratoryTestsGroups>
+			<Generator>
+				<ByDefault>
+					<Text>
+						<!-- Информация для отображения пользователю, если север ВЛ недоступен -->
+					</Text>
+					<Code>
+						<!-- Информация для лабораторной установки, если север ВЛ недоступен -->
+					</Code>
+					<Instructions>
+						<!-- Инструкции по проверки решения, если сервер ВЛ недоступен -->
+					</Instructions>
+				</ByDefault>
+				<Algorithm>
+					<!-- oscillation -->
 				</Algorithm>
 			</Generator>
 		</LaboratoryFrame>
