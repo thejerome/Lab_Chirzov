@@ -1,6 +1,7 @@
 function init_lab() {
     var MAX_INTENSITY = 4;
     var MIN_INTENSITY = 0;
+    var help_slide_number = 0;
     var container;
     var controls_blocked = false;
     var help_active = false;
@@ -76,7 +77,102 @@ function init_lab() {
         '</div><div class="workspace_visibility_plot"><div class="plot_title">Значение видимости <i>V</i></div>' +
         '<div class="visibility_plot_pattern_show">Образец: <div class="visibility_pattern_value"></div></div>' +
         '<div class="visibility_plot_user_show">Результат: <div class="visibility_user_value"></div></div>' +
-        '</div></div><div class="block_help">Справка</div></div>';
+        '</div></div><div class="block_help">' +
+        '<h1>Помощь по работе в виртуальной лаборатории</h1>' +
+        '<p>Уважаемый on-line слушатель МООС - курса «Физическая оптика»!</p>' +
+        '<p>Вы находитесь в виртуальной оптической лаборатории, где Вашему вниманию предлагается электронная модель ' +
+        'классического опыта Юнга, которая гораздо ближе к действительности упрощенной схемы, традиционно изучаемой в ' +
+        'элементарных курсах, где как правило рассматривается картина, возникающая при освещении двух бесконечно узких ' +
+        'параллельных друг другу щелей монохроматическим светом от источника в виде параллельной щелям бесконечно тонкой ' +
+        'самосветящейся нити. В данной работе Вам представляется возможность  познакомиться с ' +
+        'моделью опыта Юнга, источник света в которой представляет собой самосветящуюся полоску конечной (и изменяемой ' +
+        'пользователем) ширины, что  в большей степени соответствует реальности. Этот источник считается некогерентным, что означает полное отсутствие каких-либо корреляций ' +
+        'между излучающими свет колебаниями каждого его малого элемента. Конечно, предлагаемая Вашему вниманию  система тоже ' +
+        'является моделью, которая не полностью соответствует действительности. Например, в ней не учтены эффекты, обусловленные ' +
+        'конечностью высоты светящейся полоски и конечностью размеров щелей Юнга. Было бы хорошо, если бы Вы попытались ' +
+        'создать собственную оригинальную моделирующую программу, реализующую более совершенную модель, учитывающую перечисленные эффекты. ' +
+        'Однако знакомство с настоящей электронной моделью тоже весьма поучительно: с ее помощью удается не только продемонстрировать ' +
+        'основные особенности «классического» опыта Юнга, но и проиллюстрировать весьма нетривиальные идеи, требующие ' +
+        'осознания при изучении вопросов, связанных с пространственной и временной когерентностью реальных источников света.</p>' +
+        '<p>Запустите виртуальную  лабораторную  модель.</p>' +
+        '<h2>Интерфейс виртуального эксперимента</h2>' +
+        '<p>Параметры  модели: &lambda; = 500 нм, <i>D</i> = 0.50  м, <i>D+d</i> = 1.00 м, &alpha; = 0.01 мм,  <i>А</i> = 0.01 мм.</p>' +
+        '<div class="help_slide slide_0"><span>1</span><img src="img/Lab_interference_help_1.png" width="429" height="348"/><p>На Вашем компьютере появилась интерактивная ' +
+        'модель классического эксперимента по интерференции света, ' +
+        'называемого опытом  Юнга. В верхней части рабочего поля изображена схема экспериментальной установки.</p></div>' +
+        '<div class="help_slide slide_1"><span>2</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_1.png" width="429" height="348"/><p>В левой  части  схемы установлен монохроматический некогерентный  источник, ' +
+        'длину волны излучения которого можно регулировать движком «&lambda;» во всем оптическом диапазоне от границ ближней ультрафиолетовой ' +
+        'области (&lambda; = 380 нм) до границ инфракрасного ' +
+        'диапазона (&lambda; = 780 нм). Попытайтесь установить наиболее приятный для Вас цвет светового пучка!</p></div>' +
+        '<div class="help_slide slide_2"><span>3</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_green_2" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_1.png" width="429" height="348"/><p>Световой пучок от источника освещает щель регулируемой ' +
+        'ширины (движок «&alpha;»), каждая точка которой в соответствии с принципом Гюйгенса - Френеля может ' +
+        'рассматриваться как вторичный некогерентный источник сферических волн. ' +
+        'Изображение так создаваемой самосветящейся полоски выводится в левое окно, расположенное под схемой установки.</p></div>' +
+        '<div class="help_slide slide_3"><span>4</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_4.png" width="429" height="348"/><p>При загрузке эксперимента была установлена ' +
+        'минимально возможная для модели ширина полоски - 0.01 мм. Пользуясь движком  «&alpha;», увеличьте размеры полоски до, например, 1 мм.</p></div>' +
+        '<div class="help_slide slide_4"><span>5</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_4.png" width="429" height="348"/><p>Правее вторичного источника света располагается экран с щелями Юнга, положение ' +
+        'которого можно изменять с помощью движка «<i>D</i>», перемещая экран вдоль «оптической  скамьи».</div>' +
+        '<div class="help_slide slide_5"><span>6</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_4.png" width="429" height="348"/><p>Расстояние между щелями может регулироваться с помощью  движка «<i>А</i>». ' +
+        'Изображение перемещаемых щелей Юнга формируется в среднем окне, расположенном под схемой установки.</p></div>' +
+        '<div class="help_slide slide_6"><span>7</span><img src="img/Lab_interference_help_7.png" width="429" height="348"/><p>При загрузке эксперимента ' +
+        'было установлено минимально возможное для модели расстояние между щелями - 0.02 мм. ' +
+        'С помощью движка «<i>А</i>» увеличьте  его, например, до величины 2.02 мм.</p></div>' +
+        '<div class="help_slide slide_7"><span>8</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_7.png" width="429" height="348"/><p>Экран для наблюдения интерференционной картины ' +
+        'располагается правее щелей Юнга и может перемещаться между последним и концом оптической ' +
+        'скамьи (движок «<i>D+d</i>»). Обратите внимание на то, что в ' +
+        'соответствующем окне отображается расстояние от этого экрана до вторичного источника света, а не щелей Юнга!</p></div>' +
+        '<div class="help_slide slide_8"><span>9</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_7.png" width="429" height="348"/><p>Формирующаяся на этом экране интерференционная ' +
+        'картина выводится в правое окно, расположенное под схемой установки. Начальные установки были такими, что ' +
+        'характерная интерференционная картина была достаточно четкой. Не исключена возможность, что в ' +
+        'результате Ваших действий при знакомстве с интерфейсом случилось так, что интерференционная картина уже исчезла.</p></div>' +
+        '<div class="help_slide slide_9"><span>10</span>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_7.png" width="429" height="348"/><p>Для визуализации результатов Ваших действий кликните мышью по пиктограмме, запускающей ' +
+        'обновление рабочего экрана. В итоге Вы сможете познакомиться с результатами Ваших усилий по юстировке установки. Если ' +
+        'интерференционная картина не появилась - не  огорчайтесь: целью выполнения этой работы является приобретение навыков настройки ' +
+        'экспериментальной установки, обеспечивающей получение интерференционной картины с нужными параметрами.</p></div>' +
+        '<div class="help_slide slide_10"><span>11</span>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_7.png" width="429" height="348"/><p>С характерным видом интерференционной картины можно познакомиться, ' +
+        'кликнув по левой части ' +
+        'переключателя «Образец - результат», расположенного под окном визуализации интерференционной картины.</p></div>' +
+        '<div class="help_slide slide_11"><span>12</span>' +
+        '<img class="arrow_green_1" src="img/Lab_interference_arrow_green.png" width="50" height="75"/>' +
+        '<img class="arrow_red_1" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img class="arrow_red_2" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img class="arrow_red_3" src="img/Lab_interference_arrow_red.png" width="50" height="75"/>' +
+        '<img src="img/Lab_interference_help_4.png" width="429" height="348"/><p><i>I</i>(<i>x</i>) - график зависимости интенсивности ' +
+        'света от координаты экрана наблюдения, он ' +
+        'расположен в нижней части рабочего экрана. Находящийся под ним переключатель «Образец - Результат - Сравнение» позволяет ' +
+        'поочередно  выводить графики зависимостей <i>I</i>(<i>x</i>) для первоначально устанавливаемых при ' +
+        'загрузке параметров оптической системы и текущего  состояния, а также - оба  графика одновременно.</p></div>' +
+        '<div class="help_slide slide_12"><span>13</span><img src="img/Lab_interference_help_1.png" width="429" height="348"/><p>' +
+        'Теперь у Вас уже достаточно опыта для того, ' +
+        'чтобы восстановить начальные настройки и получить исходную интерференционную картину. Настало время выполнить тренировочный эксперимент…</p></div>' +
+        '<input class="btn not_active slide_back" type="button" value="Назад" />' +
+        '<input class="btn slide_next" type="button" value="Далее" />' +
+        '</div></div>';
 
     function draw_light(color, edge) {
         var canvas = $(".demonstration_light")[0];
@@ -691,6 +787,28 @@ function init_lab() {
             $(".btn_play").click(function () {
                 if (!controls_blocked) {
                     launch();
+                }
+            });
+            $(".slide_next").click(function () {
+                if (help_slide_number < 12) {
+                    help_slide_number ++;
+                    $(".slide_back").removeClass("not_active");
+                    $(".help_slide").css("display", "none");
+                    $(".help_slide.slide_" + help_slide_number).css("display", "block");
+                    if (help_slide_number === 12) {
+                        $(this).addClass("not_active")
+                    }
+                }
+            });
+            $(".slide_back").click(function () {
+                if (help_slide_number > 0) {
+                    help_slide_number --;
+                    $(".slide_next").removeClass("not_active");
+                    $(".help_slide").css("display", "none");
+                    $(".help_slide.slide_" + help_slide_number).css("display", "block");
+                    if (help_slide_number === 0) {
+                        $(this).addClass("not_active")
+                    }
                 }
             })
         },
