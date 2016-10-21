@@ -98,8 +98,8 @@ public class ToolModel {
         int arrLength = bd(2).multiply(halfWidth).divide(dataStep, HALF_UP).setScale(0, HALF_UP).intValue();
         List<BigDecimal[]> plotData = new LinkedList<BigDecimal[]>();
 
-        //PI * alpha * A / lambda * d;
-        BigDecimal toSin = bdPI.multiply(alpha).multiply(A)
+        //2 * PI * alpha * A / lambda * d;
+        BigDecimal toSin = bd(2).multiply(bdPI).multiply(alpha).multiply(A)
                 .divide(lambda.multiply(D), HALF_UP);
 
         //|(sin(toSin) / toSin)|
@@ -107,9 +107,9 @@ public class ToolModel {
 
         for (BigDecimal x = dataStep; x.compareTo(halfWidth) <= 0; x = x.add(dataStep)) {
 
-            //(2 * PI * x * A) / (lambda * d2);
+            //(4 * PI * x * A) / (lambda * d2);
             BigDecimal negX = x.negate();
-            BigDecimal toCos = bd(2).multiply(bdPI).multiply(negX).multiply(A)
+            BigDecimal toCos = bd(4).multiply(bdPI).multiply(negX).multiply(A)
                     .divide(lambda.multiply(d), HALF_UP);
             //2 * i0 * alpha? * (1 + (sin(toSin) / toSin) * cos(toCos));
             BigDecimal i = bd(2).multiply(i0).multiply(
@@ -130,8 +130,8 @@ public class ToolModel {
         for (BigDecimal x = ZERO; x.compareTo(halfWidth) <= 0; x = x.add(dataStep)) {
 
 
-            //(2 * PI * x * A) / (lambda * d2);
-            BigDecimal toCos = bd(2).multiply(bdPI).multiply(x).multiply(A)
+            //(4 * PI * x * A) / (lambda * d2);
+            BigDecimal toCos = bd(4).multiply(bdPI).multiply(x).multiply(A)
                     .divide(lambda.multiply(d), HALF_UP);
             //2 * i0 * alpha? * (1 + (sin(toSin) / toSin) * cos(toCos));
             BigDecimal i = bd(2).multiply(i0).multiply(

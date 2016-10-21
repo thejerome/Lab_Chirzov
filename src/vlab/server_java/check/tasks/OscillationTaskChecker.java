@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.sin;
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ROUND_HALF_UP;
 import static java.math.BigDecimal.ZERO;
@@ -38,44 +40,62 @@ public class OscillationTaskChecker implements TaskChecker{
             boolean isAlphaOk = toolState.getLight_width().compareTo(variant.getLight_width().add(extraAlpha)) == 0;
             boolean isSleetsOk = !toolState.isLeft_slit_closed() && !toolState.isRight_slit_closed();
 
-            BigDecimal eq0 = variant.getLight_width().multiply(variant.getBetween_slits_width()).divide(
+
+
+            BigDecimal toSin0 = bd(2).multiply(new BigDecimal(PI))
+                    .multiply(variant.getLight_width())
+                    .multiply(variant.getBetween_slits_width())
+                    .divide(
+                            variant.getLight_length().multiply(variant.getLight_screen_distance().subtract(variant.getLight_slits_distance())),
+                            ROUND_HALF_UP
+            );
+
+            BigDecimal toSin1 = bd(2).multiply(new BigDecimal(PI))
+                    .multiply(toolState.getLight_width())
+                    .multiply(toolState.getBetween_slits_width())
+                    .divide(
+                            toolState.getLight_length().multiply(toolState.getLight_screen_distance().subtract(toolState.getLight_slits_distance())),
+                            ROUND_HALF_UP
+            );
+
+            BigDecimal oscilEq0 = bd(sin(toSin0.doubleValue())/toSin0.doubleValue());
+            BigDecimal oscilEq1 = bd(sin(toSin1.doubleValue())/toSin1.doubleValue());
+
+            System.out.println("variantOscilMetric = " + oscilEq0);
+            System.out.println("userOscilMetric = " + oscilEq1);
+
+            boolean isOscilEqOk =  oscilEq0.add(oscilEq1).setScale(6, ROUND_HALF_UP).compareTo(ZERO) == 0;
+
+
+            BigDecimal periodEq0 = variant.getBetween_slits_width().divide(
                     variant.getLight_length().multiply((variant.getLight_slits_distance())),
                     10, ROUND_HALF_UP
             );
-            BigDecimal eq1 = toolState.getLight_width().multiply(toolState.getBetween_slits_width()).divide(
+            BigDecimal periodEq1 = toolState.getBetween_slits_width().divide(
                     toolState.getLight_length().multiply((toolState.getLight_slits_distance())),
                     10, ROUND_HALF_UP
             );
 
-            System.out.println("variantMetric = " + eq0);
-            System.out.println("userMetric = " + eq1);
+            System.out.println("variantPeriodMetric = " + periodEq0);
+            System.out.println("userPeriodMetric = " + periodEq1);
 
-
-            boolean isEqOk = eq0.subtract(eq1).setScale(6, ROUND_HALF_UP).compareTo(ZERO) == 0;
-
-            List<BigDecimal[]> variantPlot = variant.getData_plot_pattern();
-            List<BigDecimal[]> userPlot = ToolModel.buildPlot(toolState).getData_plot();
-
-            BigDecimal zeroVariantValue = variantPlot.get(variantPlot.size() / 2)[1];
-            BigDecimal zeroUserValue = userPlot.get(userPlot.size() / 2)[1];
-
-            System.out.println("userPlot.get(userPlot.size() / 2)[0]; = " + userPlot.get(userPlot.size() / 2)[0]);
-
-            System.out.println("zeroVariantValue = " + zeroVariantValue);
-            System.out.println("zeroUserValue = " + zeroUserValue);
-
-            boolean isZeroValuesOk = zeroUserValue.subtract(zeroVariantValue).abs().compareTo(bd(0.01)) <= 0;
+            boolean isPeriodEqOk = periodEq0.subtract(periodEq1).setScale(6, ROUND_HALF_UP).compareTo(ZERO) == 0;
 
             BigDecimal points;
             String comment;
 
             if(isLambdaOk && isAlphaOk && isSleetsOk){
-                if (isEqOk){
-                    points = ONE;
-                    comment = "Верно!";
+                if (isOscilEqOk){
+                    if (isPeriodEqOk){
+                        points = ONE;
+                        comment = "Верно!";
+                    } else {
+                        points = bd(0.5);
+                        comment = "Итоговая интерференционная картина не соотвествует требованиям задания.";
+                    }
                 } else {
                     points = bd(0.3);
-                    comment = "Итоговая интерференционные не соотвествует требованиям задания.";
+                    comment = "Итоговая интерференционная картина не соотвествует требованиям задания.";
                 }
             } else {
                 points = ZERO;
