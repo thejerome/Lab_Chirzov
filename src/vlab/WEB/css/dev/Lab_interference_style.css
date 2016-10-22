@@ -150,10 +150,12 @@
 .workspace_light_source label,
 .workspace_slits label {
     width: 95%;
+    text-align: center;
 }
 
 .workspace_demonstration label {
     width: 30%;
+    text-align: center;
 }
 
 .workspace_light_source label input,
@@ -167,7 +169,7 @@
 .workspace_demonstration label input.control_light_slits,
 .workspace_demonstration label input.control_slits_screen,
 .workspace_demonstration label input.control_light_length {
-    width: 50%;
+    width: 46%;
     vertical-align: middle;
 }
 
@@ -532,13 +534,13 @@
 
 .workspace_visibility_plot > div.visibility_plot_pattern_show {
     margin-top: 60px;
-    text-align: left;
 }
 
 .visibility_plot_pattern_show,
 .visibility_plot_user_show {
     width: 80%;
     cursor: default;
+    text-align: left;
 }
 
 .visibility_plot_pattern_show > div,
