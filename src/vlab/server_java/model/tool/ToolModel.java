@@ -29,6 +29,10 @@ public class ToolModel {
     private static final BigDecimal defaultXStep = bd("0.00025");
     private static final BigDecimal i0 = ONE;
 
+    public static BigDecimal getPeriod(BigDecimal A, BigDecimal lambda, BigDecimal d) {
+        return (d.multiply(lambda)).divide(A, HALF_UP);
+    }
+
     public static PlotData buildPlot(ToolState state){
 
         BigDecimal A = state.getBetween_slits_width().multiply(TEN_POW_MINUS_THREE);
@@ -76,7 +80,7 @@ public class ToolModel {
 
         BigDecimal dataStep = defaultXStep;
 
-        BigDecimal dataPeriod = (d.multiply(lambda)).divide(A, HALF_UP);
+        BigDecimal dataPeriod = getPeriod(A, lambda, d);
         BigDecimal xStepsPerPeriod = dataPeriod.divide(dataStep, HALF_UP);
 
         System.out.println("dataPeriod = " + dataPeriod);
@@ -150,6 +154,8 @@ public class ToolModel {
 
         return new PlotData(new ArrayList<>(plotData), V);
     }
+
+
 
     private static PlotData buildOneValuePlotData(BigDecimal value) {
         int arrLength = bd(2).multiply(halfWidth).divide(defaultXStep).intValue();

@@ -46,7 +46,7 @@ public class OscillationTaskGenerator implements GenerateProcessorImpl.TaskGener
             BigDecimal between_slits_step = bd("0.01");
 
 
-            BigDecimal extra_alpha = bd(getRandomDoubleBetween(2, 5)/10).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal extra_alpha = bd(getRandomDoubleBetween(1, 3)/10).setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal extra_lambda = bd(getRandomIntegerBetween(20, 100));
 
             if (getRandomBoolean()){
