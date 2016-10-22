@@ -29,6 +29,10 @@ public class ToolModel {
     private static final BigDecimal defaultXStep = bd("0.00025");
     private static final BigDecimal i0 = ONE;
 
+    public static BigDecimal getPeriod(BigDecimal A, BigDecimal lambda, BigDecimal d) {
+        return (d.multiply(lambda)).divide(A, HALF_UP);
+    }
+
     public static PlotData buildPlot(ToolState state){
 
         BigDecimal A = state.getBetween_slits_width().multiply(TEN_POW_MINUS_THREE);
@@ -76,7 +80,7 @@ public class ToolModel {
 
         BigDecimal dataStep = defaultXStep;
 
-        BigDecimal dataPeriod = (d.multiply(lambda)).divide(A, HALF_UP);
+        BigDecimal dataPeriod = getPeriod(A, lambda, d);
         BigDecimal xStepsPerPeriod = dataPeriod.divide(dataStep, HALF_UP);
 
         System.out.println("dataPeriod = " + dataPeriod);
@@ -98,8 +102,8 @@ public class ToolModel {
         int arrLength = bd(2).multiply(halfWidth).divide(dataStep, HALF_UP).setScale(0, HALF_UP).intValue();
         List<BigDecimal[]> plotData = new LinkedList<BigDecimal[]>();
 
-        //PI * alpha * A / lambda * d;
-        BigDecimal toSin = bdPI.multiply(alpha).multiply(A)
+        //2 * PI * alpha * A / lambda * d;
+        BigDecimal toSin = bd(2).multiply(bdPI).multiply(alpha).multiply(A)
                 .divide(lambda.multiply(D), HALF_UP);
 
         //|(sin(toSin) / toSin)|
@@ -107,9 +111,9 @@ public class ToolModel {
 
         for (BigDecimal x = dataStep; x.compareTo(halfWidth) <= 0; x = x.add(dataStep)) {
 
-            //(2 * PI * x * A) / (lambda * d2);
+            //(4 * PI * x * A) / (lambda * d2);
             BigDecimal negX = x.negate();
-            BigDecimal toCos = bd(2).multiply(bdPI).multiply(negX).multiply(A)
+            BigDecimal toCos = bd(4).multiply(bdPI).multiply(negX).multiply(A)
                     .divide(lambda.multiply(d), HALF_UP);
             //2 * i0 * alpha? * (1 + (sin(toSin) / toSin) * cos(toCos));
             BigDecimal i = bd(2).multiply(i0).multiply(
@@ -130,8 +134,8 @@ public class ToolModel {
         for (BigDecimal x = ZERO; x.compareTo(halfWidth) <= 0; x = x.add(dataStep)) {
 
 
-            //(2 * PI * x * A) / (lambda * d2);
-            BigDecimal toCos = bd(2).multiply(bdPI).multiply(x).multiply(A)
+            //(4 * PI * x * A) / (lambda * d2);
+            BigDecimal toCos = bd(4).multiply(bdPI).multiply(x).multiply(A)
                     .divide(lambda.multiply(d), HALF_UP);
             //2 * i0 * alpha? * (1 + (sin(toSin) / toSin) * cos(toCos));
             BigDecimal i = bd(2).multiply(i0).multiply(
@@ -150,6 +154,8 @@ public class ToolModel {
 
         return new PlotData(new ArrayList<>(plotData), V);
     }
+
+
 
     private static PlotData buildOneValuePlotData(BigDecimal value) {
         int arrLength = bd(2).multiply(halfWidth).divide(defaultXStep).intValue();

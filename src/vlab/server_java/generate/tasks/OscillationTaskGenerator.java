@@ -29,11 +29,11 @@ public class OscillationTaskGenerator implements GenerateProcessorImpl.TaskGener
         String instructions = " ";
         try {
 
-            BigDecimal light_slits_distance = bd("0.5");
+            BigDecimal light_slits_distance = bd("0.4");
             BigDecimal light_screen_distance = bd("1.5");
             BigDecimal[] light_screen_range = new BigDecimal[]{bd("0.01"), bd("2")};
             BigDecimal light_screen_step = bd("0.01");
-            BigDecimal light_width = bd("1.5");
+            BigDecimal light_width = bd("0.9");
             BigDecimal[] light_width_range = new BigDecimal[]{bd("0.01"), bd("10")};
             BigDecimal light_width_step = bd("0.01");
             BigDecimal light_length = bd("600");
@@ -41,12 +41,12 @@ public class OscillationTaskGenerator implements GenerateProcessorImpl.TaskGener
             BigDecimal light_length_step = bd("1");
             boolean right_slit_closed = false;
             boolean left_slit_closed = false;
-            BigDecimal between_slits_width = bd("0.5");
+            BigDecimal between_slits_width = bd("0.2");
             BigDecimal[] between_slits_range = new BigDecimal[]{bd("0.01"), bd("3")};
             BigDecimal between_slits_step = bd("0.01");
 
 
-            BigDecimal extra_alpha = bd(getRandomDoubleBetween(2, 5)/10).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal extra_alpha = bd(getRandomDoubleBetween(1, 3)/10).setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal extra_lambda = bd(getRandomIntegerBetween(20, 100));
 
             if (getRandomBoolean()){
